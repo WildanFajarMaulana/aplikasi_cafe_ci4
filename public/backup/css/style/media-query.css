@@ -1,0 +1,38 @@
+/*media query*/
+@media(min-width: 1000px){
+	.wrap-icon-button-bar,
+	.wrapper-header-nav,
+	.wrap-switch-page,
+	.wrap-pop-up{
+		width: 33%;
+	}
+}
+
+@media(max-width: 992px){
+	.body{
+		width: 45%;
+	}
+
+	.wrap-icon-button-bar,
+	.wrapper-header-nav,
+	.wrap-pop-up{
+		width: 45%;
+	}
+}	
+
+@media(max-width: 600px){
+	body{
+		background-color: white;
+	}
+
+	.body{
+		width: 100%;
+	}
+
+	.wrap-icon-button-bar,
+	.wrapper-header-nav,
+	.wrap-switch-page,
+	.wrap-pop-up{
+		width: 100%;
+	}
+}

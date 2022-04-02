@@ -1,0 +1,84 @@
+@import url("root.css");
+
+.body{
+	padding-top: 60px;
+}
+
+.switch-page{
+	width: 100%;
+	height: 30px;
+	position: fixed;
+	top: 50px;
+	left: 0px;
+	right: 0px;
+	z-index: 10;
+}
+
+.wrap-switch-page{
+	background-color: white;
+	border: none;
+	padding: 0px 15px;
+	height: 38px;
+}
+
+.switch-page .switch{
+	float: left;
+	display: inline-block;
+	min-width: 20%;
+	line-height: 35px;
+	font-size: 20px;
+	background-color: white;
+}
+
+.switch-page .switch:nth-child(2){
+	margin-left: 15px;
+}
+
+.switch-page .switch.aktif{
+	border-bottom: 3px solid black;
+}
+
+.content{
+	width: 100%;
+	min-height: 700px;
+	margin-top: 45px;
+}
+
+
+.history{
+	width: 100%;
+	height: 100px;
+	border-bottom: 1px solid var(--grey);
+	position: relative;
+}
+
+.icon-history{
+	width: 60px;
+	height: 60px;
+	background-color: #ababab;
+	border-radius: 50%;
+	position: absolute;
+	transform: translate(-50%);
+	top: 15%;
+	left: 10%;
+}
+
+.detail-history{
+	width: 80%;
+	height: 100%;
+	margin-left: 20%;
+	padding: 7.5px;
+}
+
+.text-ruang{
+	font-size: 19px;
+}
+
+.text-proses{
+	font-size: 14px;
+	margin-top: -5px;
+}
+
+.text-tanggal{
+	font-size: 13px;
+}
