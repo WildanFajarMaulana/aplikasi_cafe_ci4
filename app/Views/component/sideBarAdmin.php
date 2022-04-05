@@ -96,25 +96,25 @@
           <li class="nav-item <?=site_url('/petugas/managePesanan.html')?>">
                 <ul class="nav nav-treeview">
                     <li class="nav-item">
-                        <a href="<?=site_url('/admin/managePesanan.html')?>" class="nav-link active">
+                        <a href="<?=site_url('/petugas/managePesanan.html')?>" class="nav-link active">
                         <i class="fas fa-utensils nav-icon"></i>
                         <p>Pesanan Masuk</p>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="<?=site_url('/admin/managetopUp.html')?>" class="nav-link active">
+                        <a href="<?=site_url('/petugas/managetopUp.html')?>" class="nav-link active">
                         <i class="fas fa-dollar-sign nav-icon"></i>
                         <p>Top Up</p>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="<?=site_url('/admin/manageriwayatPesanan.html')?>" class="nav-link active">
+                        <a href="<?=site_url('/petugas/manageriwayatPesanan.html')?>" class="nav-link active">
                         <i class="fas fa-history nav-icon"></i>
                         <p>Riwayat Pesanan</p>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="<?=site_url('/admin/manageriwayatTopup.html')?>" class="nav-link active">
+                        <a href="<?=site_url('/petugas/manageriwayatTopup.html')?>" class="nav-link active">
                         <i class="fas fa-history nav-icon"></i>
                         <p>Riwayat Top Up</p>
                         </a>
@@ -123,7 +123,7 @@
             </li>
 
             <li class="nav-item <?=site_url('/petugas/managePesanan.html')?>">
-            <a href="<?=site_url('/admin/managePesanan.html')?>" class="nav-link">
+            <a href="<?=site_url('/petugas/managePesanan.html')?>" class="nav-link">
              <i class="fas fa-utensils mr-2"></i>
               <p>
                 &nbsp;Pesanan Masuk
@@ -131,7 +131,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="<?=site_url('/admin/managetopUp.html')?>" class="nav-link">
+            <a href="<?=site_url('/petugas/managetopUp.html')?>" class="nav-link">
              <i class="fas fa-dollar-sign mr-2"></i>
               <p>
                 &nbsp;Top Up
@@ -139,7 +139,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="<?=site_url('/admin/manageriwayatPesanan.html')?>" class="nav-link">
+            <a href="<?=site_url('/petugas/manageriwayatPesanan.html')?>" class="nav-link">
              <i class="fas fa-history mr-2"></i>
               <p>
                 &nbsp;Riwayat Pesanan
@@ -147,7 +147,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="<?=site_url('/admin/manageriwayatTopup.html')?>" class="nav-link">
+            <a href="<?=site_url('/petugas/manageriwayatTopup.html')?>" class="nav-link">
              <i class="fas fa-history mr-2"></i>
               <p>
                 &nbsp;Riwayat Top Up
@@ -156,12 +156,14 @@
           </li>
 
           <?php } ?>
-        <li class="nav-item button-keluar" style="margin-top: 100px;">
-            
+      
+        <li class="nav-item" style="margin-top: 100px;">
+            <a href="/logout.html" class="nav-link">
             <i class="fas fa-sign-out nav-icon"></i>
             <p>Logout</p>   
             </a>
         </li>
+        
           
         </ul>
       </nav>
@@ -169,34 +171,3 @@
     </div>
     <!-- /.sidebar -->
   </aside>
-
-
-   <script type="text/javascript">
-      $(document).ready(function(){
-        $('.button-keluar').on('click',function(){
-          console.log('ok')
-          var csrfName = $('.csrfCafe').attr('name'); // CSRF Token name
-              var csrfHash = $('.csrfCafe').val(); // CSRF hash
-           $.ajax({
-                        type:"post",
-                        url:'/app/logout.html',
-                        data:{[csrfName]: csrfHash},
-                        dataType:"json",
-                        success:function(response){
-                           $('.csrfCafe').val(response.token);
-                            Swal.fire({
-                            type: 'success',
-                            title: 'Logout!',
-                            text: response.data
-                          }).then (function() {
-                          window.location.href = "/app/login.html";
-                        });
-                        },
-                        error:function(xhr,ajaxOptions,thrownError){
-                          alert(xhr.status+"\n"+xhr.responseText+"\n"+thrownError);
-                        }
-                      
-                      });
-        })
-      })
-    </script>

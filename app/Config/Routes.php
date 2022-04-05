@@ -43,7 +43,7 @@ $routes->post('/app/proseslogin.html','Auth::prosesLogin');
 $routes->post('/app/prosesregister.html','Auth::prosesRegister');
 $routes->post('/app/prosesnewpassword.html','Auth::prosesNewPassword');
 $routes->post('/app/logout.html','Auth::logout');
-$routes->post('/logout.html','Auth::logoutAdminPetugas');
+$routes->get('/logout.html','Auth::logoutAdminPetugas');
 
 
 
@@ -124,7 +124,10 @@ $routes->get('/admin/manageVoucher.html','Admin::dataVoucher');
 
 $routes->post('/admin/tambahUser.html','Admin::tambahUser');
 
+
 // PETUGAS
+
+
 $routes->get('/petugas/managePesanan.html','Petugas::pesananMasuk');
 $routes->get('/petugas/managetopUp.html','Petugas::topUp');
 $routes->get('/petugas/manageriwayatPesanan.html','Petugas::riwayatPesanan');

@@ -277,11 +277,11 @@ class Auth extends BaseController
                              ];    
                             }else if($user['role']=='petugas'){
                              $msg=[
-                                'successPetugas'=>'anda login sebagai user'
+                                'successPetugas'=>'anda login sebagai Petugas'
                              ];    
                             }else if($user['role']=='admin'){
                              $msg=[
-                                'successAdmin'=>'anda login sebagai user'
+                                'successAdmin'=>'anda login sebagai Admin'
                              ];    
                             }else{
                                $msg=[
@@ -625,19 +625,7 @@ class Auth extends BaseController
     }
     public function logoutAdminPetugas(){
         session()->destroy();
-        if($this->request->isAJAX()){
-        
-            session()->destroy();
-            $msg=[
-                'data'=>'Logout Berhasil'
-            ];
-
-            $msg['token']=csrf_hash();
-            echo json_encode($msg);
-        }else{
-            exit('request tidak dapat dilakukan');
-        }
-
+        return redirect()->to('/app/login.html');
     }
 
 }

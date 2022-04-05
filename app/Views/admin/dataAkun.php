@@ -26,14 +26,7 @@
 
             <div class="card">
               <div class="card-header border-0">
-                <button id="dropdownMenuButton" type="button" class="btn dropdown-toggle mr-2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="background-color: #dddddd;">Nama</button>
-                <button id="dropdownMenuButton" type="button" class="btn dropdown-toggle mr-2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="background-color: #dddddd;">Email</button>
-                <button id="dropdownMenuButton" type="button" class="btn dropdown-toggle mr-2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="background-color: #dddddd;">No. HP</button>
-              
-                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                  <a class="dropdown-item" href="#">Deby Saputra Pratama</a>
-                  <a class="dropdown-item" href="#">Rangga Adi Pradana</a>
-                </div>
+               
 
                 <a class="btn btn-primary" data-toggle="modal" data-target="#modalCreate" style="border-radius: 15px; float: right;"><i class="fas fa-plus" style="margin-right: 5px; " ></i>Create</a>
               </div>
@@ -86,7 +79,7 @@
               </div>
 
               <!-- Create Modal -->
-              <div class="modal fade" id="modalCreate" role="dialog" aria-labelledby="createModal" aria-hidden="true">
+             <!--  <div class="modal fade" id="modalCreate" role="dialog" aria-labelledby="createModal" aria-hidden="true">
                 <div class="modal-dialog" role="document">
                   <div class="modal-content">
                     <div class="modal-header">
@@ -95,39 +88,62 @@
                         <span aria-hidden="true">&times;</span>
                       </button>
                     </div>
-
+                    <form action="/admin/tambahUser.html" method="POST">
                       <div class="modal-body">
-                        <form action="/admin/tambahUser.html" method="post">
-                          <div class="form-group">
-                            <label>Username</label>
-                            <input type="text" name="username" class="form-control">
+                        
+                              <div class="form-group">
+                                <label>Username</label>
+                                <input type="text" name="username" class="form-control">
+                              </div>
+
+                              <div class="form-group">
+                                <label>Email</label>
+                                <input type="text" name="email" class="form-control">
+                              </div>
+
+                              <div class="form-group">
+                                <label>Password</label>
+                                <input type="password" name="password" class="form-control">
+                              </div>
+
+                                <label>Role</label><br>
+                               <select class="form-group" name="role">
+                                <option value="user">User</option>
+                                <option value="petugas">Petugas</option>
+                               </select>
+                               <br>
+                               <label>Active</label><br>
+                               <input type="radio" name="is_active">
+                          
                           </div>
-
-                          <div class="form-group">
-                            <label>Email</label>
-                            <input type="text" name="email" class="form-control">
+                          <input type="text" name="name">
+                          <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary">SUBMIT</button>
                           </div>
-
-                          <div class="form-group">
-                            <label>Password</label>
-                            <input type="password" name="password" class="form-control">
-                          </div>
-
-                            <label>Role</label><br>
-                           <select class="form-group" name="role">
-                            <option value="user">User</option>
-                            <option value="petugas">Petugas</option>
-                           </select>
-                           <br>
-                           <label>Active</label><br>
-                           <input type="radio" name="is_active">
-                      
-                      </div>
-
-                      <div class="modal-footer">
-                        <button type="submit" class="btn btn-primary">SUBMIT</button>
-                      </div>
-                      </form>
+                    </form>
+                    
+                  </div>
+                </div>
+              </div> -->
+              <div class="modal" tabindex="-1" id="modalCreate" >
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title">Modal title</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <form action="/admin/tambahUser.html" method="post">
+                    <div class="modal-body">
+                      <p>Modal body text goes here.</p>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                      <button type="submit" class="btn btn-primary">Save changes</button>
+                        </form>
+                    </div>
+                  
                   </div>
                 </div>
               </div>
@@ -144,7 +160,7 @@
                     </div>
 
                       <div class="modal-body">
-                        <form action="">
+                      
                           <div class="form-group">
                             <label>Nama Lengkap</label>
                             <input type="text" name="" class="form-control">
@@ -159,7 +175,7 @@
                             <label>No. HP</label>
                             <input type="text" name="" class="form-control">
                           </div>
-                        </form>
+                      
                       </div>
 
                       <div class="modal-footer">

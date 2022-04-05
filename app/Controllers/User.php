@@ -42,8 +42,11 @@ class User extends BaseController
         if(!session()->get('id') && !session()->get('email')){
              return redirect()->to('/app/login.html'); 
         }
-        if(session()->get('role')!='user'){
-            return redirect()->to('/app/dashboard.html');
+        if(session()->get('role')=='petugas'){
+            return redirect()->to('/petugas/managePesanan.html');
+        }
+        if(session()->get('role')=='admin'){
+            return redirect()->to('/admin/manageAkun.html');
         }
         $data['title']='Mau Cafe | Profile';
         $data['profilByIdLogin']=$this->ProfileModel->getProfileByIdLogin(session()->get('id'));
@@ -73,8 +76,11 @@ class User extends BaseController
          if(!session()->get('id') && !session()->get('email')){
              return redirect()->to('/app/login.html'); 
         }
-        if(session()->get('role')!='user'){
-            return redirect()->to('/app/dashboard.html');
+        if(session()->get('role')=='petugas'){
+            return redirect()->to('/petugas/managePesanan.html');
+        }
+        if(session()->get('role')=='admin'){
+            return redirect()->to('/admin/manageAkun.html');
         }
         $data['profilByIdLogin']=$this->ProfileModel->getProfileByIdLogin(session()->get('id'));
         if(@$data['profilByIdLogin']['pin']=='0'){
@@ -105,8 +111,11 @@ class User extends BaseController
          if(!session()->get('id') && !session()->get('email')){
              return redirect()->to('/app/login.html'); 
         }
-        if(session()->get('role')!='user'){
-            return redirect()->to('/app/dashboard.html');
+        if(session()->get('role')=='petugas'){
+            return redirect()->to('/petugas/managePesanan.html');
+        }
+        if(session()->get('role')=='admin'){
+            return redirect()->to('/admin/manageAkun.html');
         }
         $data['profilByIdLogin']=$this->ProfileModel->getProfileByIdLogin(session()->get('id'));
         $data['tampildata']=$this->KeranjangMenuModel->getKeranjangUser(@$data['profilByIdLogin']['id']);
@@ -138,8 +147,11 @@ class User extends BaseController
          if(!session()->get('id') && !session()->get('email')){
              return redirect()->to('/app/login.html'); 
         }
-        if(session()->get('role')!='user'){
-            return redirect()->to('/app/dashboard.html');
+        if(session()->get('role')=='petugas'){
+            return redirect()->to('/petugas/managePesanan.html');
+        }
+        if(session()->get('role')=='admin'){
+            return redirect()->to('/admin/manageAkun.html');
         }
         $data['profilByIdLogin']=$this->ProfileModel->getProfileByIdLogin(session()->get('id'));
 
@@ -170,8 +182,11 @@ class User extends BaseController
          if(!session()->get('id') && !session()->get('email')){
              return redirect()->to('/app/login.html'); 
         }
-        if(session()->get('role')!='user'){
-            return redirect()->to('/app/dashboard.html');
+        if(session()->get('role')=='petugas'){
+            return redirect()->to('/petugas/managePesanan.html');
+        }
+        if(session()->get('role')=='admin'){
+            return redirect()->to('/admin/manageAkun.html');
         }
         $data['profilByIdLogin']=$this->ProfileModel->getProfileByIdLogin(session()->get('id'));
         if(@$data['profilByIdLogin']['pin']=='0'){
@@ -400,8 +415,11 @@ class User extends BaseController
          if(!session()->get('id') && !session()->get('email')){
              return redirect()->to('/app/login.html'); 
         }
-        if(session()->get('role')!='user'){
-            return redirect()->to('/app/dashboard.html');
+        if(session()->get('role')=='petugas'){
+            return redirect()->to('/petugas/managePesanan.html');
+        }
+        if(session()->get('role')=='admin'){
+            return redirect()->to('/admin/manageAkun.html');
         }
         $data['profilByIdLogin']=$this->ProfileModel->getProfileByIdLogin(session()->get('id'));
 
@@ -510,8 +528,11 @@ class User extends BaseController
          if(!session()->get('id') && !session()->get('email')){
              return redirect()->to('/app/login.html'); 
         }
-        if(session()->get('role')!='user'){
-            return redirect()->to('/app/dashboard.html');
+        if(session()->get('role')=='petugas'){
+            return redirect()->to('/petugas/managePesanan.html');
+        }
+        if(session()->get('role')=='admin'){
+            return redirect()->to('/admin/manageAkun.html');
         }
          $data['profilByIdLogin']=$this->ProfileModel->getProfileByIdLogin(session()->get('id'));
          if(@$data['profilByIdLogin']['pin']!='0'){
@@ -599,8 +620,11 @@ class User extends BaseController
          if(!session()->get('id') && !session()->get('email')){
              return redirect()->to('/app/login.html'); 
         }
-        if(session()->get('role')!='user'){
-            return redirect()->to('/app/dashboard.html');
+        if(session()->get('role')=='petugas'){
+            return redirect()->to('/petugas/managePesanan.html');
+        }
+        if(session()->get('role')=='admin'){
+            return redirect()->to('/admin/manageAkun.html');
         }
         $data['profilByIdLogin']=$this->ProfileModel->getProfileByIdLogin(session()->get('id'));
          if(@!$data['profilByIdLogin']){
@@ -633,8 +657,11 @@ class User extends BaseController
           if(!session()->get('id') && !session()->get('email')){
              return redirect()->to('/app/login.html'); 
         }
-        if(session()->get('role')!='user'){
-            return redirect()->to('/app/dashboard.html');
+        if(session()->get('role')=='petugas'){
+            return redirect()->to('/petugas/managePesanan.html');
+        }
+        if(session()->get('role')=='admin'){
+            return redirect()->to('/admin/manageAkun.html');
         }
          if(@!$data['profilByIdLogin']){
             return redirect()->to('/app/profile.html');
@@ -660,8 +687,11 @@ class User extends BaseController
           if(!session()->get('id') && !session()->get('email')){
              return redirect()->to('/app/login.html'); 
         }
-        if(session()->get('role')!='user'){
-            return redirect()->to('/app/dashboard.html');
+        if(session()->get('role')=='petugas'){
+            return redirect()->to('/petugas/managePesanan.html');
+        }
+        if(session()->get('role')=='admin'){
+            return redirect()->to('/admin/manageAkun.html');
         }
          if(@!$data['profilByIdLogin']){
             return redirect()->to('/app/profile.html');
@@ -910,8 +940,11 @@ class User extends BaseController
          if(!session()->get('id') && !session()->get('email')){
              return redirect()->to('/app/login.html'); 
         }
-        if(session()->get('role')!='user'){
-            return redirect()->to('/app/dashboard.html');
+        if(session()->get('role')=='petugas'){
+            return redirect()->to('/petugas/managePesanan.html');
+        }
+        if(session()->get('role')=='admin'){
+            return redirect()->to('/admin/manageAkun.html');
         }
         $data['profilByIdLogin']=$this->ProfileModel->getProfileByIdLogin(session()->get('id'));
         if(@!$data['profilByIdLogin']){
@@ -1213,8 +1246,11 @@ class User extends BaseController
          if(!session()->get('id') && !session()->get('email')){
              return redirect()->to('/app/login.html'); 
         }
-        if(session()->get('role')!='user'){
-            return redirect()->to('/app/dashboard.html');
+        if(session()->get('role')=='petugas'){
+            return redirect()->to('/petugas/managePesanan.html');
+        }
+        if(session()->get('role')=='admin'){
+            return redirect()->to('/admin/manageAkun.html');
         }
         $data['profilByIdLogin']=$this->ProfileModel->getProfileByIdLogin(session()->get('id'));
          if(@!$data['profilByIdLogin']){
@@ -1313,8 +1349,11 @@ class User extends BaseController
          if(!session()->get('id') && !session()->get('email')){
              return redirect()->to('/app/login.html'); 
         }
-        if(session()->get('role')!='user'){
-            return redirect()->to('/app/dashboard.html');
+        if(session()->get('role')=='petugas'){
+            return redirect()->to('/petugas/managePesanan.html');
+        }
+        if(session()->get('role')=='admin'){
+            return redirect()->to('/admin/manageAkun.html');
         }
         $data['profilByIdLogin']=$this->ProfileModel->getProfileByIdLogin(session()->get('id'));
          if(@!$data['profilByIdLogin']){
@@ -1347,8 +1386,11 @@ class User extends BaseController
          if(!session()->get('id') && !session()->get('email')){
              return redirect()->to('/app/login.html'); 
         }
-        if(session()->get('role')!='user'){
-            return redirect()->to('/app/dashboard.html');
+        if(session()->get('role')=='petugas'){
+            return redirect()->to('/petugas/managePesanan.html');
+        }
+        if(session()->get('role')=='admin'){
+            return redirect()->to('/admin/manageAkun.html');
         }
         $data['profilByIdLogin']=$this->ProfileModel->getProfileByIdLogin(session()->get('id'));
         if(@$data['profilByIdLogin']['cekPin']!=1){
@@ -1373,8 +1415,11 @@ class User extends BaseController
          if(!session()->get('id') && !session()->get('email')){
              return redirect()->to('/app/login.html'); 
         }
-        if(session()->get('role')!='user'){
-            return redirect()->to('/app/dashboard.html');
+        if(session()->get('role')=='petugas'){
+            return redirect()->to('/petugas/managePesanan.html');
+        }
+        if(session()->get('role')=='admin'){
+            return redirect()->to('/admin/manageAkun.html');
         }
         $data['profilByIdLogin']=$this->ProfileModel->getProfileByIdLogin(session()->get('id'));
         if(@$data['profilByIdLogin']['cekMail']!=1){
@@ -1444,8 +1489,11 @@ class User extends BaseController
          if(!session()->get('id') && !session()->get('email')){
              return redirect()->to('/app/login.html'); 
         }
-        if(session()->get('role')!='user'){
-            return redirect()->to('/app/dashboard.html');
+        if(session()->get('role')=='petugas'){
+            return redirect()->to('/petugas/managePesanan.html');
+        }
+        if(session()->get('role')=='admin'){
+            return redirect()->to('/admin/manageAkun.html');
         }
          $data['profilByIdLogin']=$this->ProfileModel->getProfileByIdLogin(session()->get('id'));
          if(@!$data['profilByIdLogin']){
@@ -1537,8 +1585,11 @@ class User extends BaseController
          if(!session()->get('id') && !session()->get('email')){
              return redirect()->to('/app/login.html'); 
         }
-        if(session()->get('role')!='user'){
-            return redirect()->to('/app/dashboard.html');
+        if(session()->get('role')=='petugas'){
+            return redirect()->to('/petugas/managePesanan.html');
+        }
+        if(session()->get('role')=='admin'){
+            return redirect()->to('/admin/manageAkun.html');
         }
          $data['profilByIdLogin']=$this->ProfileModel->getProfileByIdLogin(session()->get('id'));
          if(@!$data['profilByIdLogin']){
@@ -1733,8 +1784,11 @@ class User extends BaseController
         if(!session()->get('id') && !session()->get('email')){
              return redirect()->to('/app/login.html'); 
         }
-        if(session()->get('role')!='user'){
-            return redirect()->to('/app/dashboard.html');
+        if(session()->get('role')=='petugas'){
+            return redirect()->to('/petugas/managePesanan.html');
+        }
+        if(session()->get('role')=='admin'){
+            return redirect()->to('/admin/manageAkun.html');
         }
         $data['profilByIdLogin']=$this->ProfileModel->getProfileByIdLogin(session()->get('id'));
         if(@$data['profilByIdLogin']['pin']=='0'){

@@ -30,13 +30,14 @@ button{
 }
 
 .login{
-	background-color: var(--blue);
+	background-color: var(--c-bold);
 	margin-top: 10px;
 }
 
 .register{
-	background-color: var(--grey);
+	background-color: var(--c-soft);
 	margin: 5px 0px;
+	color: var(--c-bold);
 }
 
 

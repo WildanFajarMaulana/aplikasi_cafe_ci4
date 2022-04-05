@@ -1,28 +1,28 @@
 @import url("root.css");
 
-.txt-login {
+.txt-login{
 	margin-top: 30px;
 }
 
-.wrap-notification {
+.wrap-notification{
 	width: 100%;
 	height: 60px;
 }
 
-.wrapp-form {
+.wrapp-form{
 	width: 100%;
 	min-height: 400px;
 	margin-top: 0px;
 }
 
-.input-form {
+.input-form{
 	width: 95%;
 	height: 60px;
-	margin: 15px 2.5%;
+	margin:15px 2.5%;
 	position: relative;
 }
 
-.input-form input {
+.input-form input{
 	width: 100%;
 	height: 50px;
 	margin-top: 5px;
@@ -36,7 +36,7 @@
 
 
 
-.input-form label {
+.input-form label{
 	position: absolute;
 	left: 10px;
 	top: -5px;
@@ -45,48 +45,48 @@
 	font-size: 15px;
 }
 
-.input-form label span {
+.input-form label span{
 	color: var(--red);
 }
 
 .wrap-left,
-.wrap-right {
+.wrap-right{
 	height: 30px;
 	float: left;
 	position: relative;
 	margin-top: 10px;
 }
 
-.wrap-left {
+.wrap-left{
 	width: 50%;
 	margin-right: 5%;
 }
 
-.wrap-right {
+.wrap-right{
 	width: 40%;
 	margin-left: 5%;
 	text-align: right;
 	padding-top: 3px;
 }
 
-.wrap-left input {
+.wrap-left input{
 	width: 20px;
 	margin-top: -10px;
 }
 
-.wrap-left label {
+.wrap-left label{
 	margin-left: 10px;
 	margin-top: 6px;
 	font-size: 16px;
 }
 
-.wrap-right a {
+.wrap-right a{
 	color: #212529;
 	font-size: 16px;
 }
 
 button,
-.button {
+.button{
 	margin-left: 5%;
 	width: 90%;
 	height: 50px;
@@ -98,22 +98,22 @@ button,
 	font-weight: 600;
 }
 
-.login {
+.login{
 	color: white;
-	background-color: var(--blue);
+	background-color: var(--c-bold);
 	text-align: center;
 	line-height: 50px;
 }
 
-.line {
+.line{
 	width: 95%;
 	margin-left: 2.5%;
 	height: 2px;
-	background-color: #000;
+	background-color:#000;
 	margin-top: 30px;
 }
 
-.line label {
+.line label{
 	background-color: white;
 	position: absolute;
 	transform: translateX(-50%);
@@ -126,7 +126,7 @@ button,
 }
 
 
-.sign-up {
+.sign-up{
 	width: 100%;
 	height: 50px;
 	margin-top: 80px;
@@ -134,11 +134,10 @@ button,
 }
 
 
-.hidden {
+.hidden{
 	display: none;
 }
-
-.styleValidation {
+.styleValidation{
 	margin-left: 10px;
 	margin-top: -20px;
 	font-size: 15px;

@@ -20,6 +20,8 @@ body{
 	--green: #10B634;
 	--red : #F30000;
 	--grey : #A09D9D;
+	--c-bold : #DAA338;
+	--c-soft: #FEE5B5;
 
 
 	/*font*/
@@ -46,7 +48,7 @@ body{
 	position: relative;
 }
 .active{
-	color:#ff4d4d;
+	color:var(--c-bold);
 }
 .totalKeranjang{
 	padding: 3px 5px;
@@ -55,7 +57,7 @@ body{
 	position: absolute;
 	color: white;
 	border-radius: 100%;
-	background-color: var(--primary);
+	background-color: var(--c-bold);
 }
 .header-nav{
 	width: 100%;
@@ -129,7 +131,7 @@ body{
 }
 
 .active-menu{
-	color: var(--primary );
+	color: var(--c-bold);
 }
 
 .pop-up{	
@@ -258,7 +260,7 @@ body{
 .col-3-button-add:nth-child(1),
 .col-3-button-add:nth-child(3){
 	width: 30%;
-	background-color: var(--success);
+	background-color: var(--c-bold);
 	color: white;
 }
 
@@ -318,7 +320,7 @@ body{
 	bottom: 20px;
 	margin-top: 20px;
 	height: 50px;
-	background-color: var(--success);
+	background-color: var(--c-bold);
 	text-align: center;
 	line-height: 50px;
 	font-size: 17px;

@@ -187,7 +187,7 @@ hr{
 .button-pesan{
 	width: 100%;
 	height: 50px;
-	background-color: var(--success);
+	background-color: var(--c-bold);
 	margin-bottom: 15px;
 	color: white;
 	text-align: center;
@@ -331,6 +331,9 @@ hr{
 	height: 50px;
 	padding:  0px 10px;
 	border-bottom: 1px solid #ccc;
+}
+.text-align-left{
+	text-align: left;
 }
 
 .discount-list{

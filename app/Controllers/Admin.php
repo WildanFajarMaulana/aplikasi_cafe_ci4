@@ -70,6 +70,7 @@ class Admin extends BaseController
     }
 
     public function tambahUser(){
+        
         $active;
         if(!$this->request->getPost('is_active')){
             $active=0;
@@ -85,6 +86,6 @@ class Admin extends BaseController
         ];
         $this->LoginModel->save($data);
         session()->setFlashdata('pesan','Berhasil Menambahkan Data');
-        return redirect()->to('/admin/manageAkun.html');
+        // return redirect()->to('/admin/manageAkun.html');
     }
 }

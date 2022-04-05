@@ -7,7 +7,7 @@
 	right: 0;
 	width: 100%;
 	height: 110px;
-	background-color: #257CFE;
+	background-color: var(--c-bold);
 	padding: 5px 15px;
 }
 
@@ -95,7 +95,7 @@
 	position: absolute;
 	width: 90%;
 	height: 40px;
-	background-color: #257CFE;
+	background-color: var(--c-bold);
 	left: 5%;
 	right: 5%;
 	bottom: 65px;
