@@ -18,6 +18,9 @@ class LokasiModel extends Model
     public function getLokasi(){
         return $this->orderBy('id','ASC')->paginate(3);
     }
+    public function getLokasiByid($id){
+        return $this->where(['id'=>$id])->first();
+    }
     public function getLokasiByKeyword($keyword){
        $where="lokasi LIKE '$keyword%'";
        return $this->where($where)->paginate(3);

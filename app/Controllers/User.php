@@ -214,7 +214,7 @@ class User extends BaseController
         if($this->request->isAJAX()){
             
              $data=[
-                'id'=>$this->request->getPost('id'),
+                'id_tranksaksi'=>$this->request->getPost('id'),
                 'show_pemesanan'=>1
              ];
              $this->TranksaksiModel->save($data);
@@ -765,6 +765,7 @@ class User extends BaseController
     public function prosesVerifikasiPinTranksaksi(){
         if($this->request->isAJAX()){
              $data['profilByIdLogin']=$this->ProfileModel->getProfileByIdLogin(session()->get('id'));
+             
              $first=$this->request->getPost('first');
              $second=$this->request->getPost('second');
              $third=$this->request->getPost('third');
@@ -772,8 +773,8 @@ class User extends BaseController
 
              $allpin=$first.$second.$third.$fourth;
              if($allpin==@$data['profilByIdLogin']['pin']){
-                if(trim($this->request->getPost('payment'))=='e_wallet'){ 
-                    if($data['profilByIdLogin']['saldo']>=$this->request->getPost('total_pembayaran')){
+                if($this->request->getPost('payment')=='E_WALLET'){ 
+                    if($this->request->getPost('total_pembayaran')<=$data['profilByIdLogin']['saldo']){
                         $profileLogin=$this->ProfileModel->getProfileByIdLogin(session()->get('id'));
                         $data=[
                             'id'=>@$profileLogin['id'],
@@ -1142,6 +1143,7 @@ class User extends BaseController
                  $data=[
                     'tampildata'=>$this->KeranjangMenuModel->getKeranjangUser(@$data['profilByIdLogin']['id']),
                     'total_pembayaran'=>$this->KeranjangMenuModel->sumKeranjangByIdPembeli(@$data['profilByIdLogin']['id']),
+                    'cekTranksaksiByIdStatus'=>$this->TranksaksiModel->cekTranksaksiByIdStatus2(@$data['profilByIdLogin']['id'],'diproses','dikonfirmasi'),
                     'getProfileByIdLogin'=>$this->ProfileModel->getProfileByIdLogin(session()->get('id'))
                 ];
                 
@@ -1858,6 +1860,8 @@ class User extends BaseController
          if($this->request->isAJAX()){
                 $data['profilByIdLogin']=$this->ProfileModel->getProfileByIdLogin(session()->get('id'));
                   $data['tampildata']=$this->KeranjangMenuModel->getKeranjangUser(@$data['profilByIdLogin']['id']);
+                  $data['cekTranksaksiByIdStatus']=$this->TranksaksiModel->cekTranksaksiByIdStatus2(@$data['profilByIdLogin']['id'],'diproses','dikonfirmasi');
+
                 $msg=[
                     'data'=>view('user/formPesan',$data)
                 ];
@@ -1867,4 +1871,5 @@ class User extends BaseController
             exit("maaf tidak dapat diproses");
         }
     }
+   
 }

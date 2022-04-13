@@ -25,5 +25,9 @@ class LoginModel extends Model
     public function getDataLogin($id){
        return $this->where(['id'=>$id])->first();
     }
+    public function getDataNoAdmin(){
+      $where = "role!='admin'";
+      return $this->where($where)->paginate(5,'userlogin');
+    }
     
 }

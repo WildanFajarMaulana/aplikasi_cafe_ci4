@@ -32,6 +32,7 @@ $routes->setAutoRoute(true);
 // We get a performance increase by specifying the default
 // route since we don't have to scan directories.
 $routes->get('/', 'Auth::tampilanAwal');
+$routes->get('/app/', 'Auth::tampilanAwal');
 
 
 // auth routes
@@ -121,9 +122,27 @@ $routes->get('/admin/manageMenu.html','Admin::dataMenu');
 $routes->get('/admin/manageLokasi.html','Admin::dataLokasi');
 $routes->get('/admin/manageArtikel.html','Admin::dataArtikel');
 $routes->get('/admin/manageVoucher.html','Admin::dataVoucher');
+$routes->get('/admin/deleteUser/(:any).html','Admin::deleteUser/$1');
+$routes->get('/admin/deleteMenu/(:any).html','Admin::deleteMenu/$1');
+$routes->get('/admin/hapusWallet/(:any).html','Admin::hapusWallet/$1');
+$routes->get('/admin/deleteLokasi/(:any).html','Admin::deleteLokasi/$1');
+$routes->get('/admin/getUserByid.html','Admin::getUserByid');
+$routes->get('/admin/getMenuByid.html','Admin::getMenuByid');
+$routes->get('/admin/getLokasiByid.html','Admin::getLokasiByid');
+$routes->get('/admin/getUserProfileByid.html','Admin::getUserProfileByid');
+$routes->get('/admin/manageWallet.html','Admin::manageWallet');
+
 
 $routes->post('/admin/tambahUser.html','Admin::tambahUser');
+$routes->post('/admin/updateUser.html','Admin::updateUser');
 
+$routes->post('/admin/tambahMenu.html','Admin::tambahMenu');
+$routes->post('/admin/updateMenu.html','Admin::updateMenu');
+
+$routes->post('/admin/tambahLokasi.html','Admin::tambahLokasi');
+$routes->post('/admin/editLokasi.html','Admin::editLokasi');
+
+$routes->post('/admin/tambahWallet.html','Admin::tambahWallet');
 
 // PETUGAS
 
@@ -132,10 +151,15 @@ $routes->get('/petugas/managePesanan.html','Petugas::pesananMasuk');
 $routes->get('/petugas/managetopUp.html','Petugas::topUp');
 $routes->get('/petugas/manageriwayatPesanan.html','Petugas::riwayatPesanan');
 $routes->get('/petugas/manageriwayatTopup.html','Petugas::riwayatopup');
+$routes->get('/petugas/generateSaldo.html','Petugas::generateSaldo');
+$routes->get('/petugas/getDataPesanan.html','Petugas::getDataPesanan');
 
+$routes->get('/petugas/deletePesanan/(:any).html','petugas::deletePesanan/$1');
 
-
-
+$routes->get('/petugas/getDetailKeranjangByidpembeli.html','Petugas::getDetailKeranjangByidpembeli');
+$routes->post('/petugas/konfirmasiPesanan.html','Petugas::konfirmasiPesanan');
+$routes->post('/petugas/akhiriPesanan.html','Petugas::akhiriPesanan');
+$routes->post('/petugas/prosesTopup.html','Petugas::prosesTopup');
 
 
 

@@ -7,7 +7,7 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0"><i class="fas fa-location-arrow mr-2"></i> DATA LOKASI</h1>
+                    <h1 class="m-0"><i class="fas fa-exclamation-circle mr-2"></i> DATA WALLET</h1>
                 </div><!-- /.col -->
             </div><!-- /.row -->
         </div><!-- /.container-fluid -->
@@ -26,43 +26,49 @@
                 <div class="col-lg-12">
 
                     <div class="card">
+
+                        <?php if(!$cekWallet){?>
                         <div class="card-header border-0">
                             <a class="btn btn-primary" data-toggle="modal" data-target="#modalCreate"
                                 style="border-radius: 15px; float: right;"><i class="fas fa-plus"
                                     style="margin-right: 5px; "></i>Create</a>
                         </div>
+                        <?php }else{}?>
+
                         <div class="card-body table-responsive p-0">
                             <table class="table table-striped table-valign-middle">
                                 <thead>
                                     <tr>
-                                        <th>Id</th>
-                                        <th>Lokasi</th>
+                                        <th>No</th>
+                                        <th>Nama Wallet</th>
+                                        <th>Total Saldo</th>
+                                        <th>Tanggal Dibuat</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
+                                <?php if ($cekWallet){?>
                                 <tbody>
-                                    <?php if($lokasi){?>
-                                    <?php $no=1; foreach($lokasi as $l){ ?>
-                                    <tr>
-                                        <td><?= $no++ ?></td>
-                                        <td><?= $l['lokasi'] ?></td>
 
-                                        <td><a class="btn button-update" data-id="<?= $l['id']?>" data-toggle="modal"
-                                                data-target="#modalUpdate" title="Edit"><i class="fas fa-pen"></i></a>
-                                        </td>
-                                        <td><a href="/admin/deleteLokasi/<?= $l['id']?>.html"
-                                                onclick="return confirm('Yakin Untuk Menghapusnya?');" class="btn"
-                                                data-toggle="tooltip" title="Delete"><i
+                                    <tr>
+                                        <td>1</td>
+                                        <td><?= @$cekWallet['nama_wallet']?></td>
+                                        <td>Rp.<?= @$cekWallet['saldo']?></td>
+                                        <td><?= @$cekWallet['created_at']?></td>
+                                        <td><a class="btn" data-toggle="modal" data-target="#modalUpdate"
+                                                title="Edit"><i class="fas fa-plus"></i></a></td>
+                                        <td><a onclick="return confirm('Yakin Untuk Menghapusnya?');"
+                                                href="/admin/hapusWallet/<?= @$cekWallet['nama_wallet']?>.html"
+                                                class="btn" data-toggle="tooltip" title="Delete"><i
                                                     class="fas fa-trash-alt"></i></a></td>
 
 
                                     </tr>
-                                    <?php }?>
                                     <?php }else{?>
+
                                     <div
                                         style="position:absolute;margin: auto;left: 50%;top: 150%;transform: translate(-50%, -50%); text-align:center">
                                         <p>Anda Belum
-                                            Menambahkan Lokasi</p>
+                                            Menambahkan Wallet</p>
                                     </div>
                                     <?php }?>
 
@@ -90,19 +96,23 @@
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h5 class="modal-title">Tambah Data</h5>
+                                        <h5 class="modal-title">Buat Wallet</h5>
                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                             <span aria-hidden="true">&times;</span>
                                         </button>
                                     </div>
 
                                     <div class="modal-body">
-                                        <form action="/admin/tambahLokasi.html" method="post">
-                                            <?= csrf_field() ?>
+                                        <form action="/admin/tambahWallet.html" method="post">
+                                            <?= csrf_field()?>
                                             <div class="form-group">
-                                                <label>Lokasi</label>
-                                                <input type="text" name="lokasi" class="form-control">
+                                                <label>Saldo</label>
+                                                <input type="text" name="saldo" class="form-control"
+                                                    onkeypress="return event.charCode >= 48 && event.charCode <=57">
                                             </div>
+
+
+
                                     </div>
 
                                     <div class="modal-footer">
@@ -119,102 +129,43 @@
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h5 class="modal-title">Edit Data</h5>
+                                        <h5 class="modal-title">Tambah Saldo Wallet</h5>
                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                             <span aria-hidden="true">&times;</span>
                                         </button>
                                     </div>
 
                                     <div class="modal-body">
-                                        <form action="/admin/editLokasi.html" method="post">
-                                            <?= csrf_field() ?>
+                                        <form action="/admin/tambahWallet.html" method="post">
+                                            <?= csrf_field()?>
                                             <div class="form-group">
-                                                <label>Lokasi</label>
-                                                <input type="hidden" name="id" id="id" class="form-control">
-                                                <input type="text" name="lokasi" id="lokasi" class="form-control">
+                                                <label>Saldo</label>
+                                                <input type="text" name="saldo" class="form-control"
+                                                    onkeypress="return event.charCode >= 48 && event.charCode <=57">
                                             </div>
+
+
+
                                     </div>
 
                                     <div class="modal-footer">
-                                        <button type="submit" class="btn btn-primary">Update</button>
+                                        <button type="submit" class="btn btn-primary">SUBMIT</button>
                                     </div>
                                     </form>
                                 </div>
                             </div>
                         </div>
 
-                        <!-- Pop Up Profile -->
-                        <div class="modal fade" id="modalDetail" role="dialog" aria-labelledby="detailModal"
-                            aria-hidden="true">
-                            <div class="modal-dialog" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title">PROFILE</h5>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                    </div>
 
-                                    <div class="modal-body">
-                                        <div class="pfimg">
-                                            <img class="pfmodal" src="/img/profile.jpg" alt="">
-                                            <h4 class="txtname">Rangga Adi Pradana</h4>
-                                        </div>
-
-                                        <div class="form-group">
-                                            <p><i class="far fa-envelope fa-xl"></i>ranggapradana161@gmail.com</p>
-                                        </div>
-
-                                        <div class="form-group">
-                                            <p><i class="fas fa-mobile-alt fa-xl"></i>08xxxxxxxxxx</p>
-                                        </div>
-                                    </div>
-
-                                </div>
-                            </div>
-                        </div>
-
+                        <!-- /.card -->
                     </div>
-                    <!-- /.card -->
+                    <!-- /.col-md-6 -->
                 </div>
-                <!-- /.col-md-6 -->
+                <!-- /.row -->
             </div>
-            <!-- /.row -->
+            <!-- /.container-fluid -->
         </div>
-        <!-- /.container-fluid -->
-        <?= $pager->links('userlokasi','paging') ?>
+        <!-- /.content -->
     </div>
-    <!-- /.content -->
-</div>
 
-<?= $this->endSection(); ?>
-
-<?= $this->section('script'); ?>
-<script>
-$('.button-update').on('click', function() {
-
-
-    let id = $(this).attr('data-id')
-
-
-    $.ajax({
-        type: "get",
-        url: '/admin/getLokasiByid.html',
-        data: {
-            id: id
-
-        },
-        dataType: "json",
-        success: function(response) {
-
-            $('#id').val(response.id)
-            $('#lokasi').val(response.lokasi)
-
-        },
-        error: function(xhr, ajaxOptions, thrownError) {
-            alert(xhr.status + "\n" + xhr.responseText + "\n" + thrownError);
-        }
-    });
-})
-</script>
-<?= $this->endSection(); ?>
+    <?= $this->endSection(); ?>

@@ -25,16 +25,9 @@
           <div class="col-lg-12">
 
             <div class="card">
-              <div class="card-header border-0">
-                <button id="dropdownMenuButton" type="button" class="btn dropdown-toggle mr-2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="background-color: #dddddd;">Judul</button>
-                <button id="dropdownMenuButton" type="button" class="btn dropdown-toggle mr-2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="background-color: #dddddd;">Keterangan</button>
-              
-                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                  <a class="dropdown-item" href="#">Deby Saputra Pratama</a>
-                  <a class="dropdown-item" href="#">Rangga Adi Pradana</a>
-                </div>
-
-              </div>
+            <div class="card-header border-0">
+               <a class="btn btn-primary" data-toggle="modal" data-target="#modalCreate" style="border-radius: 15px; float: right;"><i class="fas fa-plus" style="margin-right: 5px; " ></i>Create</a>
+             </div>
               <div class="card-body table-responsive p-0">
                 <table class="table table-striped table-valign-middle">
                   <thead>

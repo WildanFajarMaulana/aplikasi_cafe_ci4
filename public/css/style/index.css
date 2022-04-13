@@ -1,43 +1,47 @@
 @import url("root.css");
-
-.txt-s-dtg{
-	margin-top: 15px;
+body,
+.body {
+  background-color: #daa339 !important;
+}
+.txt-s-dtg {
+  margin-top: 15px;
+  font-size: 38px;
+  font-weight: bold;
+  color: white;
 }
 
-
-.big-icon{
-	width: 90%;
-	margin-left: 5%;
-	height: 450px;
-	margin-top: 30px;
-	background-size: cover;
-	background-position: center;
+.big-icon {
+  width: 90%;
+  margin-left: 5%;
+  height: 450px;
+  margin-top: 30px;
+  background-size: cover;
+  background-position: center;
 }
 
-.wrap-button{
-	width: 90%;
-	margin-left: 5%;
-	height: 120px;
-	margin-top: 30px;
+.wrap-button {
+  width: 90%;
+  margin-left: 5%;
+  height: 120px;
+  margin-top: 30px;
 }
 
-button{
-	width: 100%;
-	height: 50px;
-	border: none;
-	border-radius: 10px;
-	color: white;
+button {
+  width: 100%;
+  height: 50px;
+  border: none;
+  border-radius: 10px;
+  color: white;
 }
 
-.login{
-	background-color: var(--c-bold);
-	margin-top: 10px;
+.login {
+  background-color: white;
+  color: #daa339;
+  margin-top: 10px;
 }
 
-.register{
-	background-color: var(--c-soft);
-	margin: 5px 0px;
-	color: var(--c-bold);
+.register {
+  background-color: var(--c-soft);
+  margin: 5px 0px;
+  color: var(--c-bold);
 }
-
-

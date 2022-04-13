@@ -4,205 +4,261 @@
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <div class="content-header">
-      <div class="container-fluid">
-        <div class="row mb-2">
-          <div class="col-sm-6">
-            <h1 class="m-0"><i class="fas fa-utensils mr-2"></i> DATA MENU</h1>
-          </div><!-- /.col -->
-        </div><!-- /.row -->
-      </div><!-- /.container-fluid -->
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1 class="m-0"><i class="fas fa-utensils mr-2"></i> DATA MENU</h1>
+                </div><!-- /.col -->
+            </div><!-- /.row -->
+        </div><!-- /.container-fluid -->
     </div>
     <!-- /.content-header -->
 
-    <?php if(session()->getFlashdata('pesan')){ ?>
-      <div class="alert alert-primary"><?= session()->getFlashdata('pesan') ?></div>
-    <?php } ?>
 
     <!-- Main content -->
     <div class="content">
-      <div class="container-fluid">
-        <div class="row">
-          <div class="col-lg-12">
+        <div class="container-fluid">
+            <?php if(session()->getFlashdata('pesan')){ ?>
+            <div class="alert alert-primary"><?= session()->getFlashdata('pesan') ?></div>
+            <?php } ?>
+            <div class="row">
+                <div class="col-lg-12">
 
-            <div class="card">
-              <div class="card-header border-0">
-                <button id="dropdownMenuButton" type="button" class="btn dropdown-toggle mr-2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="background-color: #dddddd;">Menu</button>
-                <button id="dropdownMenuButton" type="button" class="btn dropdown-toggle mr-2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="background-color: #dddddd;">Harga</button>
-                <button id="dropdownMenuButton" type="button" class="btn dropdown-toggle mr-2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="background-color: #dddddd;">Keterangan</button>
-              
-                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                  <a class="dropdown-item" href="#">Deby Saputra Pratama</a>
-                  <a class="dropdown-item" href="#">Rangga Adi Pradana</a>
-                </div>
+                    <div class="card">
+                        <div class="card-header border-0">
 
-                <a class="btn btn-primary" data-toggle="modal" data-target="#modalCreate" style="border-radius: 15px; float: right;"><i class="fas fa-plus" style="margin-right: 5px; " ></i>Create</a>
-              </div>
-              <div class="card-body table-responsive p-0">
-                <table class="table table-striped table-valign-middle">
-                  <thead>
-                  <tr>
-                    <th style="width: 100px;"><input type="checkbox" style="margin-right: 10px;"></input>Menu</th>
-                    <th>Harga</th>
-                    <th>Keterangan</th>
-                    <th>Action</th>
-                  </tr>
-                  </thead>
-                  <tbody>
 
-                  <tr>
-                    <td><input type="checkbox" style="margin-right: 10px;"></input>1</td>
-                    <td>10.000</td>
-                    <td>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Dolore iusto quia nemo ad incidunt animi aperiam laudantium molestiae explicabo consequatur dicta ipsa!</td>
-                    <td><a  class="btn" data-toggle="modal" data-target="#modalUpdate" title="Edit"><i class="fas fa-pen"></i></a></td>
-                    <td><a class="btn" data-toggle="tooltip" title="Delete"><i class="fas fa-trash-alt"></i></a></td>
-                    <td><a  class="btn" data-toggle="tooltip" title="Save"><i class="fas fa-save"></i></a></i></a></td>
-                    <td><a  class="btn" title="Detail" data-toggle="modal" data-target="#modalDetail"><i class="fas fa-info-circle"></i></a></td> 
-                  </tr>
-
-                    <tr>
-                      <th class="pag" colspan="10">
-                        <div class="pagination">
-                          <a href=""><i class="fas fa-chevron-left"></i></a>
-                          <a href="">1</a>
-                          <a href="">2</a>
-                          <a href="">3</a>
-                          <a href="">4</a>
-                          <a href="">5</a>
-                          <a href="">6</a>
-                          <a href=""><i class="fas fa-chevron-right"></i></a>
+                            <a class="btn btn-primary" data-toggle="modal" data-target="#modalCreate"
+                                style="border-radius: 15px; float: right;"><i class="fas fa-plus"
+                                    style="margin-right: 5px; "></i>Create</a>
                         </div>
-                      </th>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
+                        <div class="card-body table-responsive p-0">
+                            <table class="table table-striped table-valign-middle">
+                                <thead>
+                                    <tr>
 
-              <!-- Create Modal -->
-              <div class="modal fade" id="modalCreate" role="dialog" aria-labelledby="createModal" aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <h5 class="modal-title">Tambah Data</h5>
-                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                      </button>
+                                        <th>No</th>
+                                        <th>Nama Menu</th>
+                                        <th>Gambar</th>
+                                        <th>Harga</th>
+                                        <th>Kategori</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php if($menu){?>
+                                    <?php $no=1;foreach($menu as $m){ ?>
+                                    <tr>
+                                        <td>
+                                            <?= $no++ ?>
+                                        </td>
+                                        <td> <?= $m['nama'] ?></td>
+                                        <td><img src="/img/<?= $m['gambar'] ?>" alt="" width="150"></td>
+                                        <td> <?= $m['harga'] ?></td>
+                                        <td> <?= $m['kategori'] ?></td>
+                                        <td><a class="btn button-update" data-id="<?= $m['id'] ?>" data-toggle="modal"
+                                                data-target="#modalUpdate" title="Edit"><i class="fas fa-pen"></i></a>
+                                        </td>
+                                        <td><a href="/admin/deleteMenu/<?= $m['id'] ?>.html"
+                                                onclick="return confirm('Yakin Untuk Menghapusnya?');" class="btn"
+                                                data-toggle="tooltip" title="Delete"><i
+                                                    class="fas fa-trash-alt"></i></a></td>
+
+
+                                    </tr>
+                                    <?php } ?>
+                                    <?php }else{?>
+                                    <div
+                                        style="position:absolute;margin: auto;left: 50%;top: 150%;transform: translate(-50%, -50%); text-align:center">
+                                        <p>Anda Belum
+                                            Menambahkan Menu</p>
+                                    </div>
+                                    <?php }?>
+
+                                    <!-- <tr>
+                                        <th class="pag" colspan="10">
+                                            <div class="pagination">
+                                                <a href=""><i class="fas fa-chevron-left"></i></a>
+                                                <a href="">1</a>
+                                                <a href="">2</a>
+                                                <a href="">3</a>
+                                                <a href="">4</a>
+                                                <a href="">5</a>
+                                                <a href="">6</a>
+                                                <a href=""><i class="fas fa-chevron-right"></i></a>
+                                            </div>
+                                        </th>
+                                    </tr> -->
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <!-- Create Modal -->
+                        <div class="modal fade" id="modalCreate" role="dialog" aria-labelledby="createModal"
+                            aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title">Tambah Data</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+
+                                    <div class="modal-body">
+                                        <form action="/admin/tambahMenu.html" method="post"
+                                            enctype="multipart/form-data">
+                                            <?= csrf_field() ?>
+                                            <div class="form-group">
+                                                <label>Nama Menu</label>
+                                                <input type="text" name="nama_menu" class="form-control">
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label>Gambar</label>
+                                                <input type="file" name="gambar" class="form-control">
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label>Harga</label>
+                                                <input type="text" name="harga" class="form-control">
+                                            </div>
+
+                                            <label>Kategory</label><br>
+                                            <select class="form-group" name="kategori">
+                                                <option value="makanan">Makanan</option>
+                                                <option value="minuman">Minuman</option>
+                                            </select>
+
+
+                                    </div>
+
+                                    <div class="modal-footer">
+                                        <button type="submit" class="btn btn-primary">SUBMIT</button>
+                                    </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Update Modal -->
+                        <div class="modal fade" id="modalUpdate" role="dialog" aria-labelledby="createModal"
+                            aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title">Update Data</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+
+                                    <div class="modal-body">
+                                        <form action="/admin/updateMenu.html" method="post"
+                                            enctype="multipart/form-data">
+                                            <?= csrf_field() ?>
+                                            <div class="form-group">
+                                                <label>Nama Menu</label>
+
+                                                <input type="hidden" name="id" id="id" class="form-control">
+                                                <input type="text" name="nama_menu" id="nama_menu" class="form-control">
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label>Gambar</label>
+                                                <br>
+                                                <img class="pfmodal" src="" alt="" width="150">
+                                                <input type="hidden" name="gambarLama" id="gambarLama"
+                                                    class="form-control">
+                                                <input type="file" name="gambar" id="gambar" class="form-control">
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label>Harga</label>
+                                                <input type="text" name="harga" id="harga" class="form-control">
+                                            </div>
+
+                                            <label>Kategory</label><br>
+                                            <select class="form-group" name="kategori" id="kategori">
+                                                <option value="makanan">Makanan</option>
+                                                <option value="minuman">Minuman</option>
+                                            </select>
+
+
+                                    </div>
+
+                                    <div class="modal-footer">
+                                        <button type="submit" class="btn btn-primary">Update</button>
+                                    </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+
+
+
                     </div>
-
-                      <div class="modal-body">
-                        <form action="/admin/tambahUser.html" method="post">
-                          <div class="form-group">
-                            <label>Username</label>
-                            <input type="text" name="username" class="form-control">
-                          </div>
-
-                          <div class="form-group">
-                            <label>Email</label>
-                            <input type="text" name="email" class="form-control">
-                          </div>
-
-                          <div class="form-group">
-                            <label>Password</label>
-                            <input type="password" name="password" class="form-control">
-                          </div>
-
-                            <label>Role</label><br>
-                           <select class="form-group" name="role">
-                            <option value="user">User</option>
-                            <option value="petugas">Petugas</option>
-                           </select>
-                           <br>
-                           <label>Active</label><br>
-                           <input type="radio" name="is_active">
-                      
-                      </div>
-
-                      <div class="modal-footer">
-                        <button type="submit" class="btn btn-primary">SUBMIT</button>
-                      </div>
-                      </form>
-                  </div>
+                    <!-- /.card -->
                 </div>
-              </div>
-
-              <!-- Update Modal -->
-              <div class="modal fade" id="modalUpdate" role="dialog" aria-labelledby="updateModal" aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <h5 class="modal-title">Edit Data</h5>
-                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                      </button>
-                    </div>
-
-                      <div class="modal-body">
-                        <form action="">
-                          <div class="form-group">
-                            <label>Nama Lengkap</label>
-                            <input type="text" name="" class="form-control">
-                          </div>
-
-                          <div class="form-group">
-                            <label>Email</label>
-                            <input type="text" name="" class="form-control">
-                          </div>
-
-                          <div class="form-group">
-                            <label>No. HP</label>
-                            <input type="text" name="" class="form-control">
-                          </div>
-                        </form>
-                      </div>
-
-                      <div class="modal-footer">
-                        <button type="submit" class="btn btn-primary">SUBMIT</button>
-                      </div>
-  
-                  </div>
-                </div>
-              </div>
-
-              <!-- Pop Up Profile -->
-              <div class="modal fade" id="modalDetail" role="dialog" aria-labelledby="detailModal" aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <h5 class="modal-title">PROFILE</h5>
-                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                      </button>
-                    </div>
-
-                      <div class="modal-body">
-                        <div class="pfimg">
-                          <img class="pfmodal" src="/img/profile.jpg" alt="">
-                          <h4 class="txtname">Rangga Adi Pradana</h4>
-                        </div>
-
-                        <div class="form-group">
-                          <p><i class="far fa-envelope fa-xl"></i>ranggapradana161@gmail.com</p>
-                        </div>
-
-                        <div class="form-group">
-                          <p><i class="fas fa-mobile-alt fa-xl"></i>08xxxxxxxxxx</p>
-                        </div>
-                      </div>
-                    
-                  </div>
-                </div>
-              </div>
-
+                <!-- /.col-md-6 -->
             </div>
-            <!-- /.card -->
-          </div>
-          <!-- /.col-md-6 -->
+            <!-- /.row -->
         </div>
-        <!-- /.row -->
-      </div>
-      <!-- /.container-fluid -->
+        <!-- /.container-fluid -->
+        <?= $pager->links('usermenu','paging') ?>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
     </div>
     <!-- /.content -->
-  </div>
+</div>
 
 <?= $this->endSection(); ?>
-    
+
+<?= $this->section('script'); ?>
+<script>
+$('.button-update').on('click', function() {
+
+
+    let id = $(this).attr('data-id')
+
+
+    $.ajax({
+        type: "get",
+        url: '/admin/getMenuByid.html',
+        data: {
+            id: id
+
+        },
+        dataType: "json",
+        success: function(response) {
+            console.log(response)
+            console.log(response.id)
+            $('#id').val(response.id)
+            $('#nama_menu').val(response.nama)
+            $('#harga').val(response.harga)
+            $('#gambarLama').val(response.gambar)
+            $('.pfmodal').attr('src', `/img/${response.gambar}`)
+            if (response.kategori == 'makanan') {
+                $('#kategori').val('makanan').attr("selected", "selected");
+            } else if (response.kategori == 'minuman') {
+                $('#kategori').val('minuman').attr("selected", "selected");
+            }
+
+
+
+
+        },
+        error: function(xhr, ajaxOptions, thrownError) {
+            alert(xhr.status + "\n" + xhr.responseText + "\n" + thrownError);
+        }
+    });
+})
+</script>
+<?= $this->endSection(); ?>

@@ -24,6 +24,12 @@ class FavMenuModel extends Model
     public function deleteFavMenu($id_pembeli,$id_menu){
         return $this->where(['id_pembeli'=>$id_pembeli,'id_menu'=>$id_menu])->delete();
     }
+    public function deleteByIdmenu($id_menu){
+      $sql="DELETE FROM tb_favmenu WHERE id_menu='$id_menu' ";
+        
+      return $this->query($sql);
+  }
+    
     public function getMenu(){
         $db = \Config\Database::connect();
         $query = "SELECT tb_favmenu.id_menu,tb_menu.id,tb_menu.nama,tb_menu.gambar,tb_menu.harga, SUM(tb_favmenu.rate) AS rate

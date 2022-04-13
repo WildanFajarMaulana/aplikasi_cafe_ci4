@@ -133,8 +133,11 @@ class Auth extends BaseController
         return view('auth/register',$data);
     }
     public function lupaPassword(){
+        if(session()->get('id') && session()->get('email')){
+            return redirect()->to('/app/beranda.html'); 
+       }
         if($this->request->isAJAX()){
-
+            
             $validation=\Config\Services::validation();
             $valid=$this->validate([
                 'email'=>[
@@ -215,7 +218,9 @@ class Auth extends BaseController
        
     }
     public function prosesLogin(){
-
+        if(session()->get('id') && session()->get('email')){
+            return redirect()->to('/app/beranda.html'); 
+       }
         if($this->request->isAJAX()){
 
             $validation=\Config\Services::validation();
@@ -268,6 +273,7 @@ class Auth extends BaseController
                             // session
                             session()->set([
                              'email' => $user['email'],
+                             'username' => $user['username'],
                              'role' => $user['role'],
                              'id'=>$user['id']
                              ]);
@@ -319,6 +325,9 @@ class Auth extends BaseController
         
     }
     public function prosesRegister(){
+        if(session()->get('id') && session()->get('email')){
+            return redirect()->to('/app/beranda.html'); 
+       }
         if($this->request->isAJAX()){
             $validation=\Config\Services::validation();
             $valid=$this->validate([
@@ -406,6 +415,9 @@ class Auth extends BaseController
         }
     }
     public function prosesNewPassword(){
+        if(session()->get('id') && session()->get('email')){
+            return redirect()->to('/app/beranda.html'); 
+       }
         if($this->request->isAJAX()){
             $password=$this->request->getPost('password');
 
@@ -609,6 +621,7 @@ class Auth extends BaseController
     // }
 
      public function logout(){
+         
         if($this->request->isAJAX()){
         
             session()->destroy();

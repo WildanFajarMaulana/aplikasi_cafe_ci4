@@ -11,9 +11,7 @@ class ProfileModel extends Model
 
     protected $allowedFields = ['id_login','nama','email','nomor','foto','alamat','saldo','pin','cekPin','pinTranksaksi','cekMail','pinKirimSaldo'];
  
-    protected $useTimestamps = true;
-    protected $createdField  = 'created_at';
-    protected $updatedField  = 'updated_at';
+  
   
   public function getProfileByIdLogin($id_login){
      return $this->where(['id_login'=>$id_login])->first();
