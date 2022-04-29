@@ -122,7 +122,7 @@ $('.button-plus').on('click', function() {
 
         },
         error: function(xhr, ajaxOptions, thrownError) {
-            alert(xhr.status + "\n" + xhr.responseText + "\n" + thrownError);
+
         }
     });
 })
@@ -156,7 +156,7 @@ $('.button-minus').on('click', function() {
 
         },
         error: function(xhr, ajaxOptions, thrownError) {
-            alert(xhr.status + "\n" + xhr.responseText + "\n" + thrownError);
+
         }
     });
 })
@@ -206,7 +206,7 @@ $('.hapusMenuKeranjang').on('click', function() {
 
                 },
                 error: function(xhr, ajaxOptions, thrownError) {
-                    alert(xhr.status + "\n" + xhr.responseText + "\n" + thrownError);
+
                 }
             });
 

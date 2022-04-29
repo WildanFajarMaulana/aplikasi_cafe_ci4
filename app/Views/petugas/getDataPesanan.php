@@ -34,6 +34,7 @@
             onclick="return confirm('apakah anda yakin')"><i class="fas fa-times bg-danger text-white rounded"
                 style="padding: 0.35rem !important;"></i></a></td>
 </tr>
+
 <?php } ?>
 <?php }else{?>
 <div style="position:absolute;margin: auto;left: 50%;top: 150%;transform: translate(-50%, -50%); text-align:center">
@@ -43,7 +44,28 @@
 
 <script>
 $(document).ready(function() {
+    $('.btn-detail').on('click', function() {
+        console.log('okok')
+        const id_pembeli = $(this).attr('data-id')
+        $.ajax({
+            type: "get",
+            url: '/petugas/getDetailKeranjangByidpembeli.html',
+            data: {
+                id_pembeli: id_pembeli
 
+            },
+            dataType: "json",
+            success: function(response) {
+                $('.modal-body').html(response.data)
+
+
+
+            },
+            error: function(xhr, ajaxOptions, thrownError) {
+                alert(xhr.status + "\n" + xhr.responseText + "\n" + thrownError);
+            }
+        });
+    })
     $('.btnkonfirmasi').on('click', function() {
         var csrfName = $('.csrfCafe').attr('name'); // CSRF Token name
         var csrfHash = $('.csrfCafe').val(); // CSRF hash

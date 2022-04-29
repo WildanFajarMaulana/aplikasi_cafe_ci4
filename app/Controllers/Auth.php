@@ -3,6 +3,7 @@
 namespace App\Controllers;
 use App\Models\LoginModel;
 use App\Models\LoginTokenModel;
+use App\Models\FavMenuModel;
 // use PHPMailer\PHPMailer\PHPMailer;
 // use PHPMailer\PHPMailer\SMTP;
 // use PHPMailer\PHPMailer\Exception;
@@ -10,9 +11,11 @@ class Auth extends BaseController
 {
     protected $LoginModel;
     protected $LoginTokenModel;
+    protected $FavMenuModel;
     public function __construct(){
         $this->LoginModel = new LoginModel();
         $this->LoginTokenModel = new LoginTokenModel();
+        $this->FavMenuModel = new FavMenuModel();
         $this->email = \Config\Services::email();
     }
     // public function admin(){
@@ -108,7 +111,13 @@ class Auth extends BaseController
 
 
 
-
+    public function profileWeb(){
+        if(session()->get('id') && session()->get('email')){
+             return redirect()->to('/app/beranda.html'); 
+        }
+        $data['menu']=$this->FavMenuModel->getMenuFav3();
+        return view('auth/profileWeb',$data);
+    }
     public function tampilanAwal(){
         if(session()->get('id') && session()->get('email')){
              return redirect()->to('/app/beranda.html'); 

@@ -1,29 +1,29 @@
  <?= $this->extend('template/template_user'); ?>
-<?= $this->section('content'); ?>
-   
+ <?= $this->section('content'); ?>
 
 
-      <!-- button-bar -->
-       
-     <?= $this->include('component/bottomBar') ?>
-  
-      <!-- end-button-bar -->
-  
 
-      <!-- button switch page -->
-        <section class="switch-page">
-            <div class="wrap-switch-page"> 
-              <div class="switch f-pps-l aktif riwayatProses">Dalam Proses</div> 
-              <div class="switch f-pps-l riwayatSelesai">Riwayat</div>
-              
-                
-            </div>        
-        </section>
-      <!-- end button switch page -->
+ <!-- button-bar -->
+
+ <?= $this->include('component/bottomBar') ?>
+
+ <!-- end-button-bar -->
 
 
-      <!-- content -->
-       <!--  <section class="content" id="contentCadangan" >
+ <!-- button switch page -->
+ <section class="switch-page">
+     <div class="wrap-switch-page">
+         <div class="switch f-pps-l aktif riwayatProses">Dalam Proses</div>
+         <div class="switch f-pps-l riwayatSelesai">Riwayat</div>
+
+
+     </div>
+ </section>
+ <!-- end button switch page -->
+
+
+ <!-- content -->
+ <!--  <section class="content" id="contentCadangan" >
           <?php if($tampildata){ ?>
          <?php 
           $proses='';
@@ -47,16 +47,15 @@
             <p class="text-center">Tidak Ada Pesanan Berlangsung</p>
         <?php } ?>
         </section> -->
-        <section class="content"> 
-           
-        </section>
-      <!-- end content -->
+ <section class="content">
 
-    </section>
+ </section>
+
+ <!-- end content -->
+
+ </section>
 
 
 
-  
-<?= $this->endSection() ?>
 
- 
+ <?= $this->endSection() ?>

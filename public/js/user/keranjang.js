@@ -5,9 +5,7 @@ function keranjangUser() {
     success: function (response) {
       $(".keranjangUser").html(response.data);
     },
-    error: function (xhr, ajaxOptions, thrownError) {
-      alert(xhr.status + "\n" + xhr.responseText + "\n" + thrownError);
-    },
+    error: function (xhr, ajaxOptions, thrownError) {},
   });
 }
 function getStatustranksaksi() {
@@ -22,9 +20,7 @@ function getStatustranksaksi() {
         // $('#bgImageTrx')
       }
     },
-    error: function (xhr, ajaxOptions, thrownError) {
-      alert(xhr.status + "\n" + xhr.responseText + "\n" + thrownError);
-    },
+    error: function (xhr, ajaxOptions, thrownError) {},
   });
 }
 function formPesan() {
@@ -34,9 +30,7 @@ function formPesan() {
     success: function (response) {
       $("#kotakformpesan").html(response.data);
     },
-    error: function (xhr, ajaxOptions, thrownError) {
-      alert(xhr.status + "\n" + xhr.responseText + "\n" + thrownError);
-    },
+    error: function (xhr, ajaxOptions, thrownError) {},
   });
 }
 $(document).ready(function () {

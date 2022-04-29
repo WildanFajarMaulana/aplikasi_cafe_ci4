@@ -25,7 +25,7 @@
     </div>
 </div>
 <p class="d-none" id="pinNotifs" style="color: red;">Pilih Payment Terlebih Dahulu</p>
-
+<h2 class="f-pps-l total_pembayaran d-none" style="margin-top:1px"><?= $total_pembayaran[0]['total_harga'] ?></h2>
 <div class="button-pesan f-pps-m">Pesan Sekarang</div>
 
 </form>

@@ -10,6 +10,7 @@ use App\Models\LoginModel;
 use App\Models\LoginTokenModel;
 use App\Models\RiwayatSaldoModel;
 use App\Models\LokasiModel;
+use App\Models\RoomChatModel;
 class User extends BaseController
 {
     protected $MenuModel;
@@ -20,6 +21,7 @@ class User extends BaseController
     protected $LoginModel;
     protected $RiwayatSaldoModel;
     protected $LokasiModel;
+    protected $RoomChatModel;
     public function __construct()
     {
         $this->LoginModel = new LoginModel();
@@ -32,7 +34,7 @@ class User extends BaseController
         $this->LoginTokenModel = new LoginTokenModel();
         $this->RiwayatSaldoModel = new RiwayatSaldoModel();
         $this->LokasiModel = new LokasiModel();
-
+        $this->RoomChatModel = new RoomChatModel();
          
 
     }
@@ -210,6 +212,73 @@ class User extends BaseController
          $data['cekTranksaksiByIdStatus']=$this->TranksaksiModel->cekTranksaksiById(@$data['profilByIdLogin']['id']);
         return view('user/beranda',$data);
     }
+    public function riwayatsaldo()
+    {
+        if(!session()->get('id') && !session()->get('email')){
+             return redirect()->to('/app/login.html'); 
+        }
+        if(session()->get('role')=='petugas'){
+            return redirect()->to('/petugas/managePesanan.html');
+        }
+        if(session()->get('role')=='admin'){
+            return redirect()->to('/admin/manageAkun.html');
+        }
+        $data['title']='Mau Cafe | Riwayat Saldo';
+        $data['profilByIdLogin']=$this->ProfileModel->getProfileByIdLogin(session()->get('id'));
+        if(@$data['profilByIdLogin']['pin']=='0'){
+            return redirect()->to('/app/pinProfile.html');  
+         }
+         if(@$data['profilByIdLogin']){
+             $dataCekpin=[
+                    'id'=>@$data['profilByIdLogin']['id'],
+                    'cekPin'=>'0',
+                    'pinTranksaksi'=>'0',
+                    'cekMail'=>0,
+                    'pinKirimSaldo'=>0
+                ];
+             $this->ProfileModel->save($dataCekpin);
+         }else{
+
+         }
+        $data['css']='riwayatsaldo.css';
+        $data['js']='riwayatsaldo.js'; 
+        $data['riwayatsaldoByuser']=$this->RiwayatSaldoModel->getRiwayatSaldoByUser($data['profilByIdLogin']['id']);
+        $data['terimaSaldo']=$this->RiwayatSaldoModel->getTerimaSaldo($data['profilByIdLogin']['id']);
+        return view('user/riwayatsaldo',$data);
+    }
+    public function topup()
+    {
+        if(!session()->get('id') && !session()->get('email')){
+             return redirect()->to('/app/login.html'); 
+        }
+        if(session()->get('role')=='petugas'){
+            return redirect()->to('/petugas/managePesanan.html');
+        }
+        if(session()->get('role')=='admin'){
+            return redirect()->to('/admin/manageAkun.html');
+        }
+        $data['title']='Mau Cafe | Top Up';
+        $data['profilByIdLogin']=$this->ProfileModel->getProfileByIdLogin(session()->get('id'));
+        if(@$data['profilByIdLogin']['pin']=='0'){
+            return redirect()->to('/app/pinProfile.html');  
+         }
+         if(@$data['profilByIdLogin']){
+             $dataCekpin=[
+                    'id'=>@$data['profilByIdLogin']['id'],
+                    'cekPin'=>'0',
+                    'pinTranksaksi'=>'0',
+                    'cekMail'=>0,
+                    'pinKirimSaldo'=>0
+                ];
+             $this->ProfileModel->save($dataCekpin);
+         }else{
+
+         }
+        $data['css']='topup.css';
+        $data['js']='topup.js'; 
+        
+        return view('user/topup',$data);
+    }
     public function hapusAlertPemesanan(){
         if($this->request->isAJAX()){
             
@@ -231,7 +300,7 @@ class User extends BaseController
          if($this->request->isAJAX()){
                
                 $data['profilByIdLogin']=$this->ProfileModel->getProfileByIdLogin(session()->get('id'));
-                $data['cekTranksaksiByIdStatus']=$this->TranksaksiModel->cekTranksaksiById($data['profilByIdLogin']['id']);
+                $data['cekTranksaksiByIdStatus']=$this->TranksaksiModel->cekTranksaksiById(@$data['profilByIdLogin']['id']);
                 $msg=[
                     'data'=>view('user/alertPemesanan',$data)
                 ];
@@ -738,7 +807,7 @@ class User extends BaseController
                         'id_pembeli'=>$data['profilByIdLogin']['id'],
                         'id_penerima'=>$userTerimaSaldo['id'],
                         'deskripsi'=>'Mengirim Saldo',
-                        'saldo'=>$this->request->getPost('saldo')
+                        'r_saldo'=>$this->request->getPost('saldo')
                     ];
                     $this->RiwayatSaldoModel->save($dataRiwayat);
                     $this->ProfileModel->save($dataUserTerimaSaldo);
@@ -762,6 +831,21 @@ class User extends BaseController
             exit('request tidak dapat dilakukan');  
         }
     }
+    public function createRoomMessage($url,$dataRoom){
+       
+        $curl=curl_init();
+        $str=json_encode($dataRoom);
+        curl_setopt($curl, CURLOPT_URL,$url);
+        curl_setopt($curl, CURLOPT_POST, 1);
+        curl_setopt($curl, CURLOPT_POSTFIELDS, $str);
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+           
+        $result=curl_exec($curl);
+        curl_close($curl);  
+        var_dump($result);
+        return $result;
+       
+       }
     public function prosesVerifikasiPinTranksaksi(){
         if($this->request->isAJAX()){
              $data['profilByIdLogin']=$this->ProfileModel->getProfileByIdLogin(session()->get('id'));
@@ -791,10 +875,16 @@ class User extends BaseController
                         'status_tranksaksi'=>'diproses'
                       ];
                         $this->TranksaksiModel->save($dataTranksaksi);
-
-
+                        
+                        $dataTranksaksiTerbaru=$this->TranksaksiModel->getTranksaksiTerbaruByIdpembeli(@$profileLogin['id']);
+                        $dataRoomChat=[
+                            'id_pembeli'=>(int)@$profileLogin['id'],
+                            'id_tranksaksi'=>(int)$dataTranksaksiTerbaru['id_tranksaksi']
+                        ];
+                        $this->RoomChatModel->save($dataRoomChat);
                         $msg=[
-                            'success'=>'Silahkan Tunggu'
+                            'success'=>'Silahkan Tunggu',
+                            'id_tranksaksi'=>$dataTranksaksiTerbaru['id_tranksaksi']
                         ];
                     }else{
                         $msg=[
@@ -818,10 +908,16 @@ class User extends BaseController
                     'status_tranksaksi'=>'diproses'
                   ];
                     $this->TranksaksiModel->save($dataTranksaksi);
-
-
+                    $dataTranksaksiTerbaru=$this->TranksaksiModel->getTranksaksiTerbaruByIdpembeli(@$profileLogin['id']);
+              
+                    $dataRoomChat=[
+                        'id_pembeli'=>(int)@$profileLogin['id'],
+                        'id_tranksaksi'=>(int)$dataTranksaksiTerbaru['id_tranksaksi']
+                    ];
+                    $this->RoomChatModel->save($dataRoomChat);
                     $msg=[
-                        'success'=>'Silahkan Tunggu'
+                        'success'=>'Silahkan Tunggu',
+                        'id_tranksaksi'=>$dataTranksaksiTerbaru['id_tranksaksi']
                     ];
                 }
              }else{
@@ -842,7 +938,7 @@ class User extends BaseController
             $lokasi=$this->request->getPost('lokasi');
             $payment=$this->request->getPost('payment');
         if($payment=='e_wallet'){
-            if($data['profilByIdLogin']['saldo']>=$total_pembayaran){
+            if($data['profilByIdLogin']['saldo']>=trim($total_pembayaran)){
                 $data=[
                         'id'=>@$data['profilByIdLogin']['id'],
                         'pinTranksaksi'=>'1'
@@ -882,25 +978,34 @@ class User extends BaseController
       public function kirimDataToPinSaldo(){
         if($this->request->isAJAX()){
             $data['profilByIdLogin']=$this->ProfileModel->getProfileByIdLogin(session()->get('id'));
+            $prosesTranksaksi=$this->TranksaksiModel->cekTranksaksiByIdStatus2(@ $data['profilByIdLogin']['id'],'diproses','dikonfirmasi');
+           
             $nomor=$this->request->getPost('nomor');
             $saldo=$this->request->getPost('saldo');
-           if($data['profilByIdLogin']['saldo']>=$saldo){
-                $data=[
-                        'id'=>@$data['profilByIdLogin']['id'],
-                        'pinKirimSaldo'=>'1'
-                    ];
-                $this->ProfileModel->save($data);
-
+            if($prosesTranksaksi){
                 $msg=[
-                    'nomor'=>$nomor,
-                    'saldo'=>$saldo
-                    
+                       'errorTranksaksi'=>'Anda Sedang Melakukan Tranksaksi Mohon Tunggu'
                 ];
-           }else{
-            $msg=[
-                'errorSaldo'=>'Saldo Anda Tidak Cukup'
-            ];
-           }
+            }else{
+                if($data['profilByIdLogin']['saldo']>=$saldo){
+                    $data=[
+                            'id'=>@$data['profilByIdLogin']['id'],
+                            'pinKirimSaldo'=>'1'
+                        ];
+                    $this->ProfileModel->save($data);
+
+                    $msg=[
+                        'nomor'=>$nomor,
+                        'saldo'=>$saldo
+                        
+                    ];
+                }else{
+                    $msg=[
+                        'errorSaldo'=>'Saldo Anda Tidak Cukup'
+                    ];
+                }
+            }
+         
            $msg['token']=csrf_hash();
             echo json_encode($msg);
 
@@ -915,6 +1020,7 @@ class User extends BaseController
              $second=$this->request->getPost('second');
              $third=$this->request->getPost('third');
              $fourth=$this->request->getPost('fourth');
+
 
              $allpin=$first.$second.$third.$fourth;
              if($allpin==@$data['profilByIdLogin']['pin']){
@@ -1861,7 +1967,7 @@ class User extends BaseController
                 $data['profilByIdLogin']=$this->ProfileModel->getProfileByIdLogin(session()->get('id'));
                   $data['tampildata']=$this->KeranjangMenuModel->getKeranjangUser(@$data['profilByIdLogin']['id']);
                   $data['cekTranksaksiByIdStatus']=$this->TranksaksiModel->cekTranksaksiByIdStatus2(@$data['profilByIdLogin']['id'],'diproses','dikonfirmasi');
-
+                  $data['total_pembayaran']=$this->KeranjangMenuModel->sumKeranjangByIdPembeli(@$data['profilByIdLogin']['id']);
                 $msg=[
                     'data'=>view('user/formPesan',$data)
                 ];
@@ -1870,6 +1976,42 @@ class User extends BaseController
         }else{
             exit("maaf tidak dapat diproses");
         }
+    }
+    public function chatting($id_tranksaksi)
+    {
+        
+         if(!session()->get('id') && !session()->get('email')){
+             return redirect()->to('/app/login.html'); 
+        }
+        if(session()->get('role')=='petugas'){
+            return redirect()->to('/petugas/managePesanan.html');
+        }
+        if(session()->get('role')=='admin'){
+            return redirect()->to('/admin/manageAkun.html');
+        }
+        $data['profilByIdLogin']=$this->ProfileModel->getProfileByIdLogin(session()->get('id'));
+        $data['filterRoomChat']=$this->RoomChatModel->getRoomByIdPembeliIdTranksaksi($data['profilByIdLogin']['id'],$id_tranksaksi);
+        if(!$data['filterRoomChat']){
+            return redirect()->to('/app/beranda.html');
+        }
+        if(@$data['profilByIdLogin']['pin']=='0'){
+            return redirect()->to('/app/pinProfile.html');  
+         }
+          if(@$data['profilByIdLogin']){
+             $dataCekpin=[
+                    'id'=>@$data['profilByIdLogin']['id'],
+                    'cekPin'=>'0',
+                    'pinTranksaksi'=>'0',
+                    'cekMail'=>0,
+                    'pinKirimSaldo'=>0
+                ];
+             $this->ProfileModel->save($dataCekpin);
+         }else{
+            
+         }
+         $data['id_tranksaksi']=$id_tranksaksi;
+         $data['filterChatTranksaksi']=$this->TranksaksiModel->getTranksaksiSelesaiChat($data['profilByIdLogin']['id'],$id_tranksaksi);
+        return view('user/chatting',$data);
     }
    
 }

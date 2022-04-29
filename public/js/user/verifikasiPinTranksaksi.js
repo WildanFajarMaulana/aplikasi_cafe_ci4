@@ -4,6 +4,21 @@ function clickEvent(first, last) {
   }
 }
 
+function sendApiChat(id_tranksaksi) {
+  $.ajax({
+    type: "post",
+    url: "https://chat-maucafe.herokuapp.com/message",
+    data: {
+      id: parseInt(id_tranksaksi),
+      name: "wildan",
+      time: "20.1",
+    },
+    dataType: "json",
+    success: function (response) {},
+    error: function (xhr, ajaxOptions, thrownError) {},
+  });
+}
+
 $(document).ready(function () {
   $(".formPin").submit(function (e) {
     e.preventDefault();
@@ -43,8 +58,9 @@ $(document).ready(function () {
 
             if (response.success) {
               getTotalPesanan();
+              sendApiChat(response.id_tranksaksi);
               Swal.fire("success!", "Tranksaksi Diproses", "success").then(function () {
-                window.location.href = "/app/riwayat.html";
+                window.location.href = `/app/chatting/${response.id_tranksaksi}.html`;
               });
             } else if (response.errorSaldo) {
               Swal.fire({

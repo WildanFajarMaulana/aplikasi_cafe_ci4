@@ -47,5 +47,22 @@ class FavMenuModel extends Model
         // return $this->select('tb_favmenu.id_menu','tb_menu.nama','tb_menu.gambar','tb_menu.harga')->selectSum('rate')->join('tb_favmenu','tb_favmenu.id_menu=tb_menu.id')->groupBy('tb_favmenu.id_menu')->paginate(5);
      // return $this->join('tb_menu','tb_menu.id=tb_favmenu.id_menu')->select('id_menu','nama','gambar','harga')->selectSum('rate')->groupBy('id_menu')->paginate(5);
     }
+    public function getMenuFav3(){
+      $db = \Config\Database::connect();
+      $query = "SELECT tb_favmenu.id_menu,tb_menu.id,tb_menu.nama,tb_menu.gambar,tb_menu.harga, SUM(tb_favmenu.rate) AS rate
+                  FROM tb_favmenu LEFT JOIN tb_menu
+                  ON tb_favmenu.id_menu=tb_menu.id
+                  GROUP BY tb_favmenu.id_menu ORDER BY rate DESC LIMIT 3";
+      $query = $db->query($query);
+
+      if($query){
+        $data = $query->getResultArray();
+      }
+      else $data = 0;
+
+      return $data;
+      // return $this->select('tb_favmenu.id_menu','tb_menu.nama','tb_menu.gambar','tb_menu.harga')->selectSum('rate')->join('tb_favmenu','tb_favmenu.id_menu=tb_menu.id')->groupBy('tb_favmenu.id_menu')->paginate(5);
+   // return $this->join('tb_menu','tb_menu.id=tb_favmenu.id_menu')->select('id_menu','nama','gambar','harga')->selectSum('rate')->groupBy('id_menu')->paginate(5);
+  }
     
 }

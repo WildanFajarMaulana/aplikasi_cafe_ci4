@@ -64,13 +64,13 @@
                     <label for="" class="f-pps-l">Kirim</label>
                 </div>
             </a>
-            <a href="otp.html">
+            <a href="/app/topup.html">
                 <div class="t-btn t-btn-2">
                     <i class="far fa-plus"></i>
                     <label for="" class="f-pps-l">Isi Saldo</label>
                 </div>
             </a>
-            <a href="riwayat">
+            <a href="/app/riwayatSaldo.html">
                 <div class="t-btn t-btn-3">
                     <i class="far fa-clipboard-list"></i>
                     <label for="" class="f-pps-l">Riwayat</label>

@@ -18,6 +18,12 @@ class RiwayatSaldoModel extends Model
     public function getRiwayatSaldoByIdPembeli($id_pembeli){
         return $this->where(['id_pembeli'=>$id_pembeli])->find();
     }
+    public function getRiwayatSaldoByUser($id_pembeli){
+        return $this->where(['id_pembeli'=>$id_pembeli])->orderBy('id','DESC')->find();
+    }
+    public function getTerimaSaldo($id_pembeli){
+        return $this->where(['id_penerima'=>$id_pembeli])->orderBy('id','DESC')->find();
+    }
     public function getRiwayatBydeskripsi(){
         return $this->join('tb_profile','tb_profile.id=tb_riwayatsaldo.id_pembeli')->where(['deskripsi'=>'Top Up'])->paginate(10,'usersaldo');  
     

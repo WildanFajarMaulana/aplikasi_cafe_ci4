@@ -72,6 +72,7 @@
                                                     data-target="#modalDetail"><i
                                                         class="fas fa-utensils bg-primary text-white rounded"
                                                         style="padding: 0.35rem !important;"></i></a></td>
+
                                             <?php if($p['status_tranksaksi']=='diproses'){ ?>
 
                                             <input type="hidden" class="csrfCafe" name="<?= csrf_token() ?>"
@@ -276,6 +277,9 @@ $(document).ready(function() {
     setInterval(function() {
         dataPesanan();
     }, 10000);
+    $('.hapusMenuKeranjang').on('click', function() {
+        console.log('luar')
+    })
 
     $('.btn-detail').on('click', function() {
         const id_pembeli = $(this).attr('data-id')

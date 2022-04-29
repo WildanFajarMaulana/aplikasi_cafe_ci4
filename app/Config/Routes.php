@@ -31,8 +31,8 @@ $routes->setAutoRoute(true);
 
 // We get a performance increase by specifying the default
 // route since we don't have to scan directories.
-$routes->get('/', 'Auth::tampilanAwal');
-$routes->get('/app/', 'Auth::tampilanAwal');
+$routes->get('/', 'Auth::profileWeb');
+$routes->get('/app/','Auth::tampilanAwal');
 
 
 // auth routes
@@ -79,8 +79,9 @@ $routes->get('/app/getAlertPemesanan.html','User::getAlertPemesanan');
 $routes->get('/app/getStatustranksaksi.html','User::getStatustranksaksi');
 $routes->get('/app/kirimSaldo.html','User::kirimSaldo');
 $routes->get('/app/formPesan.html','User::formPesan');
-
-
+$routes->get('/app/topup.html','User::topup');
+$routes->get('/app/riwayatSaldo.html','User::riwayatsaldo');
+$routes->get('/app/chatting/(:any).html','User::chatting/$1');
 
 $routes->post('/app/dataPopupMinuman.html','User::getPopupMenu');
 $routes->post('/app/likeMenu.html','User::likeMenu');

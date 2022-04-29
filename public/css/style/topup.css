@@ -1,0 +1,39 @@
+@import url("root.css");
+
+.body {
+  padding-bottom: 60px;
+}
+
+.wrapper {
+  margin-top: 60px;
+}
+
+.text-topup {
+  width: 100%;
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.text-topup h2 {
+  font-size: 26px;
+}
+
+.step {
+  width: 100%;
+  padding-bottom: 20px;
+}
+
+.step .left {
+  width: 40%;
+  float: left;
+}
+
+.step .right {
+  width: 100%;
+  float: right;
+}
+
+.step .right p {
+  font-size: 16px;
+  text-transform: capitalize;
+}

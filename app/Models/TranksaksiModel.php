@@ -28,6 +28,9 @@ class TranksaksiModel extends Model
     public function getTranksaksiSelesai($id_pembeli,$status_tranksaksi){
         return $this->where(['id_pembeli'=>$id_pembeli,'status_tranksaksi'=>$status_tranksaksi])->orderBy('id_tranksaksi','DESC')->find();
     }
+    public function getTranksaksiSelesaiChat($id_pembeli,$id_tranksaksi){
+        return $this->where(['id_pembeli'=>$id_pembeli,'id_tranksaksi'=>$id_tranksaksi,'status_tranksaksi'=>'selesai'])->first();
+    }
     public function cekTranksaksiById($id_pembeli){
         return $this->where(['id_pembeli'=>$id_pembeli])->orderBy('id_tranksaksi','DESC')->first();
     }
@@ -48,6 +51,9 @@ class TranksaksiModel extends Model
         $sql="DELETE FROM tb_tranksaksi WHERE id_tranksaksi='$id'";
 
         return $this->query($sql);
+    }
+    public function getTranksaksiTerbaruByIdpembeli($id_pembeli){
+        return $this->where(['id_pembeli'=>$id_pembeli])->orderBy('id_tranksaksi','DESC')->first();
     }
   
  }
