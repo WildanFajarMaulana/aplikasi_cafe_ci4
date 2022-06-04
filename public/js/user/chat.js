@@ -1,15 +1,32 @@
+function sendApiChat(id_tranksaksi, name) {
+  var tanggal = new Date();
+
+  let time = `${tanggal.getHours()}.${tanggal.getMinutes() < 10 ? "0" : ""}${tanggal.getMinutes()}`;
+  $.ajax({
+    type: "post",
+    url: "https://chat-maucafe.herokuapp.com/message",
+    data: {
+      id: parseInt(id_tranksaksi),
+      name: name,
+      time,
+    },
+    dataType: "json",
+    success: function (response) {},
+    error: function (xhr, ajaxOptions, thrownError) {},
+  });
+}
 var socket = io.connect("https://chat-maucafe.herokuapp.com");
 
 let id = parseInt($(".body").attr("data-room"));
 let role = parseInt($(".body").attr("data-role"));
-let name = $(".body").attr("data-name");
+let names = $(".body").attr("data-name");
+
 // get message
 
 socket.emit("get message", id);
 
 // update message
 socket.on("update message", function (msg) {
-  console.log(msg);
   if (msg !== null) {
     if (role == 1) {
       $(".name-chat").text(msg.user_room);
@@ -41,6 +58,8 @@ socket.on("update message", function (msg) {
       $(".body-chatting").html(show);
       window.scrollTo(0, document.body.scrollHeight);
     }
+  } else {
+    sendApiChat(id, names);
   }
 });
 
@@ -51,8 +70,11 @@ var input = document.getElementById("input");
 form.addEventListener("submit", function (e) {
   e.preventDefault();
   if (input.value) {
-    let time = "20.00";
-    socket.emit("send message", { id, role, msg: input.value, time, name });
+    var tanggal = new Date();
+
+    let time = `${tanggal.getHours()}.${tanggal.getMinutes() < 10 ? "0" : ""}${tanggal.getMinutes()}`;
+
+    socket.emit("send message", { id, role, msg: input.value, time, name: names });
     input.value = "";
   }
 });

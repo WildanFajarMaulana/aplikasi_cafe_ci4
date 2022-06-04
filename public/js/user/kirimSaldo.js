@@ -51,9 +51,7 @@ $(document).ready(function () {
           window.location.href = `/app/verifikasiPinKirimSaldo/${response.nomor}/${response.saldo}.html`;
         }
       },
-      error: function (xhr, ajaxOptions, thrownError) {
-        alert(xhr.status + "\n" + xhr.responseText + "\n" + thrownError);
-      },
+      error: function (xhr, ajaxOptions, thrownError) {},
     });
   });
   $(".formKirimSaldo").submit(function (e) {
@@ -99,9 +97,7 @@ $(document).ready(function () {
           $(".wrap-success").html(``);
         }
       },
-      error: function (xhr, ajaxOptions, thrownError) {
-        alert(xhr.status + "\n" + xhr.responseText + "\n" + thrownError);
-      },
+      error: function (xhr, ajaxOptions, thrownError) {},
     });
     return false;
   });

@@ -154,14 +154,17 @@ $routes->get('/petugas/manageriwayatPesanan.html','Petugas::riwayatPesanan');
 $routes->get('/petugas/manageriwayatTopup.html','Petugas::riwayatopup');
 $routes->get('/petugas/generateSaldo.html','Petugas::generateSaldo');
 $routes->get('/petugas/getDataPesanan.html','Petugas::getDataPesanan');
-
+$routes->get('/petugas/messageTranksaksi/(:any).html','Petugas::messageTranksaksi/$1');
 $routes->get('/petugas/deletePesanan/(:any).html','petugas::deletePesanan/$1');
 
 $routes->get('/petugas/getDetailKeranjangByidpembeli.html','Petugas::getDetailKeranjangByidpembeli');
 $routes->post('/petugas/konfirmasiPesanan.html','Petugas::konfirmasiPesanan');
 $routes->post('/petugas/akhiriPesanan.html','Petugas::akhiriPesanan');
 $routes->post('/petugas/prosesTopup.html','Petugas::prosesTopup');
-
+$routes->post('/petugas/tambahMenuTranksaksi.html','Petugas::tambahMenuTranksaksi');
+$routes->post('/petugas/plusKeranjang.html','Petugas::editTambahJumlahMenuKeranjang');
+$routes->post('/petugas/minKeranjang.html','Petugas::editKurangJumlahMenuKeranjang');
+$routes->post('/petugas/hapusMenuKeranjang.html','Petugas::hapusMenuKeranjang');
 
 
 

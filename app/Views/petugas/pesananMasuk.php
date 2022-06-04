@@ -8,6 +8,9 @@
             <?php if(session()->getFlashdata('pesan')){ ?>
             <div class="alert alert-primary"><?= session()->getFlashdata('pesan') ?></div>
             <?php } ?>
+            <?php if(session()->getFlashdata('pesanError')){ ?>
+            <div class="alert alert-danger"><?= session()->getFlashdata('pesanError') ?></div>
+            <?php } ?>
             <div class="alert alert-primary d-none" id="notifJs"></div>
             <div class="row mb-2">
                 <div class="col-sm-6">
@@ -39,6 +42,28 @@
                 </div> -->
 
                         </div>
+
+
+                        <!-- Modal -->
+                        <div class="modal fade" id="notifModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                            aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Chat</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body pesanNotif">
+
+
+
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
                         <div class="card-body table-responsive p-0">
                             <table class="table table-striped table-valign-middle">
                                 <thead>
@@ -68,9 +93,19 @@
                                             <td><?= $p['status_tranksaksi'] ?></td>
                                             <td><?= $p['created_at'] ?></td>
                                             <td><a class="btn btn-detail" title="Detail"
-                                                    data-id="<?= $p['id_pembeli']?>" data-toggle="modal"
+                                                    data-id="<?= $p['id_pembeli']?>"
+                                                    data-trx="<?= $p['id_tranksaksi']?>" data-toggle="modal"
                                                     data-target="#modalDetail"><i
                                                         class="fas fa-utensils bg-primary text-white rounded"
+                                                        style="padding: 0.35rem !important;"></i></a></td>
+                                            <td><a class="btn btn-tambah" title="Add" data-id="<?= $p['id_pembeli']?>"
+                                                    data-trx="<?= $p['id_tranksaksi']?>" data-toggle="modal"
+                                                    data-target="#modalTambah"><i
+                                                        class="fas fa-plus bg-secondary text-white rounded"
+                                                        style="padding: 0.35rem !important;"></i></a></td>
+                                            <td><a class="btn btn-message" title="Message"
+                                                    href="/petugas/messageTranksaksi/<?= $p['id_tranksaksi'] ?>.html"><i
+                                                        class="fas fa-comment-alt-lines bg-success text-white rounded"
                                                         style="padding: 0.35rem !important;"></i></a></td>
 
                                             <?php if($p['status_tranksaksi']=='diproses'){ ?>
@@ -135,91 +170,47 @@
                         </div>
 
                         <!-- Create Modal -->
-                        <div class="modal fade" id="modalCreate" role="dialog" aria-labelledby="createModal"
+                        <div class="modal fade" id="modalTambah" role="dialog" aria-labelledby="createModal"
                             aria-hidden="true">
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h5 class="modal-title">Tambah Data</h5>
+                                        <h5 class="modal-title">Tambah Menu</h5>
                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                             <span aria-hidden="true">&times;</span>
                                         </button>
                                     </div>
 
                                     <div class="modal-body">
-                                        <form action="/admin/tambahUser.html" method="post">
-                                            <div class="form-group">
-                                                <label>Username</label>
-                                                <input type="text" name="username" class="form-control">
-                                            </div>
+                                        <form action="/petugas/tambahMenuTranksaksi.html" method="post">
+                                            <?= csrf_field()?>
+                                            <input type="hidden" name="id_pembeli" class="id_pembeli_add">
+                                            <input type="hidden" name="id_tranksaksi" class="id_tranksaksi_add">
 
-                                            <div class="form-group">
-                                                <label>Email</label>
-                                                <input type="text" name="email" class="form-control">
-                                            </div>
-
-                                            <div class="form-group">
-                                                <label>Password</label>
-                                                <input type="password" name="password" class="form-control">
-                                            </div>
-
-                                            <label>Role</label><br>
-                                            <select class="form-group" name="role">
-                                                <option value="user">User</option>
-                                                <option value="petugas">Petugas</option>
+                                            <label>Menu</label><br>
+                                            <select class="form-group" name="id_menu">
+                                                <?php foreach($menuAll as $m){?>
+                                                <option value="<?= $m['id']?>"><?= $m['nama']?>(<?= $m['harga'] ?>)
+                                                </option>
+                                                <?php }?>
                                             </select>
                                             <br>
-                                            <label>Active</label><br>
-                                            <input type="radio" name="is_active">
+                                            <label>jumlah</label><br>
+                                            <input type="text" name="jumlah_add" id="jumlah_add"
+                                                onkeypress="return event.charCode >= 48 && event.charCode <=57">
 
                                     </div>
 
                                     <div class="modal-footer">
-                                        <button type="submit" class="btn btn-primary">SUBMIT</button>
+                                        <button type="submit" class="btn btn-primary">Tambah</button>
                                     </div>
                                     </form>
                                 </div>
                             </div>
                         </div>
 
-                        <!-- Update Modal -->
-                        <div class="modal fade" id="modalUpdate" role="dialog" aria-labelledby="updateModal"
-                            aria-hidden="true">
-                            <div class="modal-dialog" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title">Edit Data</h5>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                    </div>
 
-                                    <div class="modal-body">
-                                        <form action="">
-                                            <div class="form-group">
-                                                <label>Nama Lengkap</label>
-                                                <input type="text" name="" class="form-control">
-                                            </div>
 
-                                            <div class="form-group">
-                                                <label>Email</label>
-                                                <input type="text" name="" class="form-control">
-                                            </div>
-
-                                            <div class="form-group">
-                                                <label>No. HP</label>
-                                                <input type="text" name="" class="form-control">
-                                            </div>
-                                        </form>
-                                    </div>
-
-                                    <div class="modal-footer">
-                                        <button type="submit" class="btn btn-primary">SUBMIT</button>
-                                    </div>
-
-                                </div>
-                            </div>
-                        </div>
 
                         <div class="modal fade" id="modalDetail" role="dialog" aria-labelledby="detailModal"
                             aria-hidden="true">
@@ -232,7 +223,7 @@
                                         </button>
                                     </div>
 
-                                    <div class="modal-body">
+                                    <div class="modal-body modal-detail">
 
 
 
@@ -258,7 +249,53 @@
 <?= $this->endSection(); ?>
 
 <?= $this->section('script'); ?>
+
 <script>
+var socket = io.connect("https://chat-maucafe.herokuapp.com");
+socket.on("admin notif", function(msg) {
+    let pesanNotif = ` <div class="dataPesanNotif">
+                                            <h5 style="font-weight:bold">${msg.name}</h5>
+                                            <p >${msg.msg}</p>
+                                            <hr>
+                                        </div>`;
+    $('.pesanNotif').append(pesanNotif);
+    showNotifModal();
+
+});
+
+const showNotifModal = () => {
+    $('#notifModal').modal('show');
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 function dataPesanan() {
     $.ajax({
         url: "/petugas/getDataPesanan.html",
@@ -273,26 +310,23 @@ function dataPesanan() {
     });
 }
 
-$(document).ready(function() {
-    setInterval(function() {
-        dataPesanan();
-    }, 10000);
-    $('.hapusMenuKeranjang').on('click', function() {
-        console.log('luar')
-    })
-
+function getDetaildata() {
     $('.btn-detail').on('click', function() {
         const id_pembeli = $(this).attr('data-id')
+        const id_tranksaksi = $(this).attr('data-trx')
+        console.log(id_pembeli)
+        console.log(id_tranksaksi)
         $.ajax({
             type: "get",
             url: '/petugas/getDetailKeranjangByidpembeli.html',
             data: {
-                id_pembeli: id_pembeli
+                id_pembeli: id_pembeli,
+                id_tranksaksi: id_tranksaksi
 
             },
             dataType: "json",
             success: function(response) {
-                $('.modal-body').html(response.data)
+                $('.modal-detail').html(response.data)
 
 
 
@@ -302,6 +336,26 @@ $(document).ready(function() {
             }
         });
     })
+}
+
+$(document).ready(function() {
+    setInterval(function() {
+        dataPesanan();
+    }, 10000);
+    $('.hapusMenuKeranjang').on('click', function() {
+        console.log('luar')
+    })
+    getDetaildata();
+    $('.btn-tambah').on('click', function() {
+        const id_pembeli = $(this).attr('data-id')
+        const id_tranksaksi = $(this).attr('data-trx')
+        $('.id_pembeli_add').val(id_pembeli)
+        $('.id_tranksaksi_add').val(id_tranksaksi)
+        console.log(id_pembeli)
+        console.log(id_tranksaksi)
+    })
+
+
     $('.btnkonfirmasi').on('click', function() {
         var csrfName = $('.csrfCafe').attr('name'); // CSRF Token name
         var csrfHash = $('.csrfCafe').val(); // CSRF hash
@@ -325,6 +379,22 @@ $(document).ready(function() {
                     }, 1300)
 
 
+                }
+                if (response.errorSaldo) {
+                    Swal.fire({
+                        icon: 'warning',
+                        title: 'Gagal',
+                        text: response.errorSaldo
+
+                    })
+                }
+                if (response.errorPayment) {
+                    Swal.fire({
+                        icon: 'warning',
+                        title: 'Gagal',
+                        text: response.errorPayment
+
+                    })
                 }
 
 

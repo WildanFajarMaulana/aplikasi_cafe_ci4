@@ -52,6 +52,10 @@ class KeranjangMenuModel extends Model
         $sql="DELETE FROM tb_keranjangmenu WHERE id_pembeli='$id_pembeli'";
          return $this->query($sql);
     }
+    public function deleteMenuKeranjangByid($id){
+        $sql="DELETE FROM tb_keranjangmenu WHERE id='$id'";
+         return $this->query($sql);
+    }
     public function getKeranjangUser($id_pembeli){
         return $this->where(['id_pembeli'=>$id_pembeli,'status'=>'masuk'])->find();
     }

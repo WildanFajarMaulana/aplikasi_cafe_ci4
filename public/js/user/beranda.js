@@ -5,9 +5,7 @@ function dataMenuFav() {
     success: function (response) {
       $(".rekomendasiMenu").html(response.data);
     },
-    error: function (xhr, ajaxOptions, thrownError) {
-      alert(xhr.status + "\n" + xhr.responseText + "\n" + thrownError);
-    },
+    error: function (xhr, ajaxOptions, thrownError) {},
   });
 }
 function dataMinumanNew() {
@@ -17,9 +15,7 @@ function dataMinumanNew() {
     success: function (response) {
       $(".rekomendasiMinuman").html(response.data);
     },
-    error: function (xhr, ajaxOptions, thrownError) {
-      alert(xhr.status + "\n" + xhr.responseText + "\n" + thrownError);
-    },
+    error: function (xhr, ajaxOptions, thrownError) {},
   });
 }
 function dataMakananNew() {
@@ -29,9 +25,7 @@ function dataMakananNew() {
     success: function (response) {
       $(".rekomendasiMakanan").html(response.data);
     },
-    error: function (xhr, ajaxOptions, thrownError) {
-      alert(xhr.status + "\n" + xhr.responseText + "\n" + thrownError);
-    },
+    error: function (xhr, ajaxOptions, thrownError) {},
   });
 }
 
@@ -58,9 +52,7 @@ $(document).ready(function () {
         $("#wrapper-alert").remove();
         dataMenuFav();
       },
-      error: function (xhr, ajaxOptions, thrownError) {
-        alert(xhr.status + "\n" + xhr.responseText + "\n" + thrownError);
-      },
+      error: function (xhr, ajaxOptions, thrownError) {},
     });
   });
   $(".formMenu").submit(function (e) {
@@ -137,9 +129,7 @@ $(document).ready(function () {
           $(".value-pesan").val("0");
         }
       },
-      error: function (xhr, ajaxOptions, thrownError) {
-        alert(xhr.status + "\n" + xhr.responseText + "\n" + thrownError);
-      },
+      error: function (xhr, ajaxOptions, thrownError) {},
     });
     return false;
   });

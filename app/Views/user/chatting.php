@@ -89,7 +89,10 @@
         integrity="sha384-fQybjgWLrvvRgtW6bFlB7jaZrFsaBXjsOMm/tB9LTS58ONXgqbR9W8oWht/amnpF" crossorigin="anonymous">
     </script>
     <script src="https://chat-maucafe.herokuapp.com/socket.io/socket.io.js"></script>
+
+
     <script src="/js/user/chat.js"></script>
+
 
 
     <!-- Option 2: Separate Popper and Bootstrap JS -->

@@ -5,9 +5,7 @@ function riwayatSelesai() {
     success: function (response) {
       $(".content").html(response.data);
     },
-    error: function (xhr, ajaxOptions, thrownError) {
-      alert(xhr.status + "\n" + xhr.responseText + "\n" + thrownError);
-    },
+    error: function (xhr, ajaxOptions, thrownError) {},
   });
 }
 function riwayatProses() {
@@ -18,9 +16,7 @@ function riwayatProses() {
       // $("#contentCadangan").addClass('d-none');
       $(".content").html(response.data);
     },
-    error: function (xhr, ajaxOptions, thrownError) {
-      alert(xhr.status + "\n" + xhr.responseText + "\n" + thrownError);
-    },
+    error: function (xhr, ajaxOptions, thrownError) {},
   });
 }
 $(document).ready(function () {

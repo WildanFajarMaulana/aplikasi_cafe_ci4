@@ -22,6 +22,9 @@ class MenuModel extends Model
     public function getMenuAdminById($id){
         return $this->where(['id'=>$id])->first();
     }
+    public function getMenuPetugasById($id){
+        return $this->where(['id'=>$id])->first();
+    }
     public function getMenuKategori($kategori){
         return $this->where(['kategori'=>$kategori])->orderBy('id','DESC')->paginate(5);
     }

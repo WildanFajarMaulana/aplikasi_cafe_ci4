@@ -47,6 +47,7 @@ class Petugas extends BaseController
         $data['css']='index.css';
         $data['pesananMasuk']=$this->TranksaksiModel->getByStatusPesan();
         $data['pager'] = $this->TranksaksiModel->pager;
+        $data['menuAll']=$this->MenuModel->getMenu();
         return view('petugas/pesananMasuk',$data);
     }
 
@@ -64,6 +65,22 @@ class Petugas extends BaseController
         $data['title']='Petugas | TopUp';
         $data['css']='index.css';
         return view('petugas/topUp',$data);
+    }
+     public function messageTranksaksi($id_tranksaksi)
+    {
+        if(!session()->get('id') && !session()->get('email')){
+            return redirect()->to('/app/login.html'); 
+       }
+       if(session()->get('role')=='user'){
+           return redirect()->to('/app/beranda.html');
+       }
+       if(session()->get('role')=='admin'){
+           return redirect()->to('/admin/manageAkun.html');
+       }
+        $data['title']='Petugas | Message';
+        $data['css']='message.css';
+        $data['id_tranksaksi']=$id_tranksaksi;
+        return view('petugas/message',$data);
     }
     
     public function riwayatPesanan()
@@ -105,16 +122,40 @@ class Petugas extends BaseController
     public function konfirmasiPesanan(){
       if($this->request->isAJAX()){
         $prosesTranksaksi=$this->TranksaksiModel->cekTranksaksiByIdStatusPemesanan($this->request->getPost('id_pembeli'),'diproses');
-        
-        $data=[
-            'id_tranksaksi'=>$prosesTranksaksi['id_tranksaksi'],
-            'status_tranksaksi'=>'dikonfirmasi',
-            'id_petugas'=>$_SESSION['id']
-        ];
-        $this->TranksaksiModel->save($data);
-        $msg=[
-            'success'=>'Pesanan Berhasil Dikonfirmasi'
-        ];
+        $profilByIdPembeli=$this->ProfileModel->getProfileByIdPembeli($this->request->getPost('id_pembeli'));
+   
+        if($prosesTranksaksi['payment']=='e_wallet '){
+            if($prosesTranksaksi['total_pembayaran']<=$profilByIdPembeli['saldo']){
+                $data=[
+                    'id_tranksaksi'=>$prosesTranksaksi['id_tranksaksi'],
+                    'status_tranksaksi'=>'dikonfirmasi',
+                    'id_petugas'=>@$_SESSION['id']
+                ];
+                $this->TranksaksiModel->save($data);
+                $msg=[
+                    'success'=>'Pesanan Berhasil Dikonfirmasi'
+                ];
+            }else{
+                $msg=[
+                    'errorSaldo'=>'Maaf Saldo User Tidak Cukup'
+                ];
+            }
+        }else if($prosesTranksaksi['payment']=='tunai '){
+            $data=[
+                'id_tranksaksi'=>$prosesTranksaksi['id_tranksaksi'],
+                'status_tranksaksi'=>'dikonfirmasi',
+                'id_petugas'=>@$_SESSION['id']
+            ];
+            $this->TranksaksiModel->save($data);
+            $msg=[
+                'success'=>'Pesanan Berhasil Dikonfirmasi'
+            ];
+        }else{
+            $msg=[
+                'errorPayment'=>'Maaf Saldo Terdapat Kesalahan'
+            ];
+        }
+        // $msg['data']=$prosesTranksaksi;
         $msg['token']=csrf_hash();
         echo json_encode($msg);
       }else{
@@ -252,7 +293,7 @@ class Petugas extends BaseController
                 $data['pesananMasuk']=$this->TranksaksiModel->getByStatusPesan();
                 
                 
-               
+                $data['menuAll']=$this->MenuModel->getMenu();
                 $msg=[
                     'data'=>view('petugas/getDataPesanan',$data)
                 ];
@@ -266,11 +307,13 @@ class Petugas extends BaseController
         if($this->request->isAJAX()){
                 $data['keranjangDetail']=$this->KeranjangMenuModel->getKeranjangByIdPembeli($this->request->getGet('id_pembeli'));
                 
-                
+                $data['id_tranksaksi']=$this->request->getGet('id_tranksaksi');
+                $data['id_pembeli']=$this->request->getGet('id_pembeli');
                
                 $msg=[
                     'data'=>view('petugas/getDetailKeranjang',$data),
-                    'all'=> $data['keranjangDetail']
+                    'all'=> $data['keranjangDetail'],
+                    
                 ];
                
                 echo json_encode($msg);
@@ -296,6 +339,147 @@ class Petugas extends BaseController
         return redirect()->to('/petugas/managePesanan.html');
     }
     
+    public function tambahMenuTranksaksi(){
+        if(!session()->get('id') && !session()->get('email')){
+            return redirect()->to('/app/login.html'); 
+       }
+       if(session()->get('role')=='user'){
+           return redirect()->to('/app/beranda.html');
+       }
+       if(session()->get('role')=='admin'){
+           return redirect()->to('/admin/manageAkun.html');
+       }
+       $getMenuid=$this->MenuModel->getMenuPetugasById($this->request->getPost('id_menu'));
+       $filterMenuKeranjang=$this->KeranjangMenuModel->cekDataKeranjangByIdPembeliDanIdMenu($this->request->getPost('id_menu'),$this->request->getPost('id_pembeli'));
+       if($filterMenuKeranjang){
+        session()->setFlashdata('pesanError','Menu sudah ada di keranjang');
+        return redirect()->to('/petugas/managePesanan.html');
+       }
+     
+       $dataMenuKeranjang=[
+           'id_menu'=>$this->request->getPost('id_menu'),
+           'id_pembeli'=>$this->request->getPost('id_pembeli'),
+           'nama_menu'=>$getMenuid['nama'],
+           'gambar_menu'=>$getMenuid['gambar'],
+           'jumlah'=>$this->request->getPost('jumlah_add'),
+           'harga'=>$getMenuid['harga'],
+           'total_harga'=>$this->request->getPost('jumlah_add')*$getMenuid['harga'],
+           'status'=>'masuk'
+           
+       ];
+      
+       $this->KeranjangMenuModel->save($dataMenuKeranjang);
+       $total_pembayaran=$this->KeranjangMenuModel->sumKeranjangByIdPembeli($this->request->getPost('id_pembeli'));
+    
+       $dataTrxByid=[
+        'id_tranksaksi'=>$this->request->getPost('id_tranksaksi'),
+        'id_pembeli'=>$this->request->getPost('id_pembeli'),
+        'id_petugas'=>$_SESSION['id'],
+        'total_pembayaran'=>$total_pembayaran[0]['total_harga']
+       ];
+       $this->TranksaksiModel->save($dataTrxByid);
+       session()->setFlashdata('pesan','Berhasil Menambahkan Menu Ke keranjang');
+       return redirect()->to('/petugas/managePesanan.html');
+    }
+    public function hapusMenuKeranjang(){
+        if($this->request->isAJAX()){
 
+            
+            $this->KeranjangMenuModel->deleteMenuKeranjangByid($this->request->getPost('id'));
+            $total_pembayaran=$this->KeranjangMenuModel->sumKeranjangByIdPembeli($this->request->getPost('id_pembeli'));
+    
+            $dataTrxByid=[
+             'id_tranksaksi'=>$this->request->getPost('id_tranksaksi'),
+             'id_pembeli'=>$this->request->getPost('id_pembeli'),
+             'id_petugas'=>$_SESSION['id'],
+             'total_pembayaran'=>$total_pembayaran[0]['total_harga']
+            ];
+            $this->TranksaksiModel->save($dataTrxByid);
+
+            $msg=[
+                'success'=>'Menu Berhasil Dihapus'
+            ];
+            $msg['token']=csrf_hash();
+            echo json_encode($msg);
+        }else{
+             exit('request tidak dapat dilakukan');
+        }
+    }
+    public function editTambahJumlahMenuKeranjang(){
+        if($this->request->isAJAX()){
+              
+            $data['menuUser']=$this->KeranjangMenuModel->getKeranjangUserByMenu($this->request->getPost('id'),$this->request->getPost('id_pembeli'));
+            
+              $jumlahMenu=$data['menuUser']['jumlah']+1;
+
+              $data=[
+                'id'=>$data['menuUser']['id'],
+                'jumlah'=>$jumlahMenu,
+                'total_harga'=>$jumlahMenu*$data['menuUser']['harga']
+              ];
+              $this->KeranjangMenuModel->save($data);
+               
+                   $total_pembayaran=$this->KeranjangMenuModel->sumKeranjangByIdPembeli($this->request->getPost('id_pembeli'));
+        
+                $dataTrxByid=[
+                'id_tranksaksi'=>$this->request->getPost('id_tranksaksi'),
+                'id_pembeli'=>$this->request->getPost('id_pembeli'),
+                'id_petugas'=>$_SESSION['id'],
+                'total_pembayaran'=>$total_pembayaran[0]['total_harga']
+                ];
+                $this->TranksaksiModel->save($dataTrxByid);
+             
+                $msg=[
+                    'data'=>'sukses',
+                    'all'=>$jumlahMenu,
+                    'token'=>csrf_hash()
+                    
+                ];
+           
+                echo json_encode($msg);
+        }else{
+            exit('request tidak dapat dilakukan');
+        }
+    }
+      public function editKurangJumlahMenuKeranjang(){
+        if($this->request->isAJAX()){
+              
+                
+              $data['menuUser']=$this->KeranjangMenuModel->getKeranjangUserByMenu($this->request->getPost('id'),$this->request->getPost('id_pembeli'));
+            
+              if($data['menuUser']['jumlah']==1){
+                    $msg=[
+                    'error'=>'batas Maximum Pengurangan Menu'
+                ];
+              }else{
+                  $jumlahMenu=$data['menuUser']['jumlah']-1;
+                  $data=[
+                    'id'=>$data['menuUser']['id'],
+                    'jumlah'=>$jumlahMenu,
+                    'total_harga'=>$jumlahMenu*$data['menuUser']['harga']
+                  ];
+                  $this->KeranjangMenuModel->save($data);
+                  $total_pembayaran=$this->KeranjangMenuModel->sumKeranjangByIdPembeli($this->request->getPost('id_pembeli'));
+        
+                $dataTrxByid=[
+                'id_tranksaksi'=>$this->request->getPost('id_tranksaksi'),
+                'id_pembeli'=>$this->request->getPost('id_pembeli'),
+                'id_petugas'=>$_SESSION['id'],
+                'total_pembayaran'=>$total_pembayaran[0]['total_harga']
+                ];
+                $this->TranksaksiModel->save($dataTrxByid);
+                   $msg=[
+                    'data'=>'sukses'
+                    ];
+              }
+               
+                
+             
+                $msg['token']=csrf_hash();
+                echo json_encode($msg);
+        }else{
+            exit('request tidak dapat dilakukan');
+        }
+    }
     
 }

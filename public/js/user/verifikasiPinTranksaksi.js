@@ -4,18 +4,23 @@ function clickEvent(first, last) {
   }
 }
 
-function sendApiChat(id_tranksaksi) {
+function sendApiChat(id_tranksaksi, name) {
+  var tanggal = new Date();
+
+  let time = `${tanggal.getHours()}.${tanggal.getMinutes()<10?'0':''}${tanggal.getMinutes()}`;
   $.ajax({
     type: "post",
     url: "https://chat-maucafe.herokuapp.com/message",
     data: {
       id: parseInt(id_tranksaksi),
-      name: "wildan",
-      time: "20.1",
+      name: name,
+      time
     },
     dataType: "json",
-    success: function (response) {},
-    error: function (xhr, ajaxOptions, thrownError) {},
+    success: function (response) {
+      console.log(response);
+    },
+    error: function (xhr, ajaxOptions, thrownError) {}
   });
 }
 
@@ -57,8 +62,9 @@ $(document).ready(function () {
             $(".csrfCafe").val(response.token);
 
             if (response.success) {
+              sendApiChat(response.id_tranksaksi, response.names);
+              console.log(response.names);
               getTotalPesanan();
-              sendApiChat(response.id_tranksaksi);
               Swal.fire("success!", "Tranksaksi Diproses", "success").then(function () {
                 window.location.href = `/app/chatting/${response.id_tranksaksi}.html`;
               });
@@ -83,9 +89,7 @@ $(document).ready(function () {
 
             // }
           },
-          error: function (xhr, ajaxOptions, thrownError) {
-            alert(xhr.status + "\n" + xhr.responseText + "\n" + thrownError);
-          },
+          error: function (xhr, ajaxOptions, thrownError) {},
         });
       }
     });

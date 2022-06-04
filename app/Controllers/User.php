@@ -35,6 +35,9 @@ class User extends BaseController
         $this->RiwayatSaldoModel = new RiwayatSaldoModel();
         $this->LokasiModel = new LokasiModel();
         $this->RoomChatModel = new RoomChatModel();
+       
+        
+        session();
          
 
     }
@@ -68,6 +71,9 @@ class User extends BaseController
 
          }
         $data['css']='profile.css';
+        @$data['cekNotifTranksaksi']=$this->TranksaksiModel->cekTranksaksiByIdStatus2(@$data['profilByIdLogin']['id'],'diproses','dikonfirmasi');
+        $cekNotifId=@$data['cekNotifTranksaksi']['id_tranksaksi'];
+        $data['id_tranksaksi']=$cekNotifId;
         $data['js']='profile.js'; 
         
         return view('user/profile',$data);
@@ -101,7 +107,13 @@ class User extends BaseController
             
          }
         $data['title']='Mau Cafe | Riwayat';
+        @$data['cekNotifTranksaksi']=$this->TranksaksiModel->cekTranksaksiByIdStatus2(@$data['profilByIdLogin']['id'],'diproses','dikonfirmasi');
+        $cekNotifId=@$data['cekNotifTranksaksi']['id_tranksaksi'];
+        $data['id_tranksaksi']=$cekNotifId;
         $data['css']='riwayat.css';
+        @$data['cekNotifTranksaksi']=$this->TranksaksiModel->cekTranksaksiByIdStatus2(@$data['profilByIdLogin']['id'],'diproses','dikonfirmasi');
+        $cekNotifId=@$data['cekNotifTranksaksi']['id_tranksaksi'];
+        $data['id_tranksaksi']=$cekNotifId;
         $data['js']='riwayat.js'; 
         $data['tampildata']=$this->TranksaksiModel->cekTranksaksiByIdStatus2(@$data['profilByIdLogin']['id'],'diproses','dikonfirmasi');
                 
@@ -137,6 +149,9 @@ class User extends BaseController
             
          }
         $data['title']='Mau Cafe | Keranjang';
+        @$data['cekNotifTranksaksi']=$this->TranksaksiModel->cekTranksaksiByIdStatus2(@$data['profilByIdLogin']['id'],'diproses','dikonfirmasi');
+        $cekNotifId=@$data['cekNotifTranksaksi']['id_tranksaksi'];
+        $data['id_tranksaksi']=$cekNotifId;
         $data['js']='keranjang.js'; 
         $data['css']='keranjang.css';
         $data['cekTranksaksiByIdStatus']=$this->TranksaksiModel->cekTranksaksiByIdStatus2(@$data['profilByIdLogin']['id'],'diproses','dikonfirmasi');
@@ -174,6 +189,9 @@ class User extends BaseController
          }
          $data['title']='Mau Cafe | Menu';
         $data['css']='menu.css';
+        @$data['cekNotifTranksaksi']=$this->TranksaksiModel->cekTranksaksiByIdStatus2(@$data['profilByIdLogin']['id'],'diproses','dikonfirmasi');
+        $cekNotifId=@$data['cekNotifTranksaksi']['id_tranksaksi'];
+        $data['id_tranksaksi']=$cekNotifId;
         $data['js']='menu.js'; 
         
         return view('user/menu',$data);
@@ -206,7 +224,10 @@ class User extends BaseController
          }else{
             
          }
-        $data['js']='beranda.js'; 
+        @$data['cekNotifTranksaksi']=$this->TranksaksiModel->cekTranksaksiByIdStatus2(@$data['profilByIdLogin']['id'],'diproses','dikonfirmasi');
+        $cekNotifId=@$data['cekNotifTranksaksi']['id_tranksaksi'];
+        $data['id_tranksaksi']=$cekNotifId;
+         $data['js']='beranda.js'; 
         $data['title']='Mau Cafe | Beranda';
         $data['css']='beranda.css';
          $data['cekTranksaksiByIdStatus']=$this->TranksaksiModel->cekTranksaksiById(@$data['profilByIdLogin']['id']);
@@ -241,6 +262,9 @@ class User extends BaseController
 
          }
         $data['css']='riwayatsaldo.css';
+        @$data['cekNotifTranksaksi']=$this->TranksaksiModel->cekTranksaksiByIdStatus2(@$data['profilByIdLogin']['id'],'diproses','dikonfirmasi');
+        $cekNotifId=@$data['cekNotifTranksaksi']['id_tranksaksi'];
+        $data['id_tranksaksi']=$cekNotifId;
         $data['js']='riwayatsaldo.js'; 
         $data['riwayatsaldoByuser']=$this->RiwayatSaldoModel->getRiwayatSaldoByUser($data['profilByIdLogin']['id']);
         $data['terimaSaldo']=$this->RiwayatSaldoModel->getTerimaSaldo($data['profilByIdLogin']['id']);
@@ -275,6 +299,9 @@ class User extends BaseController
 
          }
         $data['css']='topup.css';
+        @$data['cekNotifTranksaksi']=$this->TranksaksiModel->cekTranksaksiByIdStatus2(@$data['profilByIdLogin']['id'],'diproses','dikonfirmasi');
+        $cekNotifId=@$data['cekNotifTranksaksi']['id_tranksaksi'];
+        $data['id_tranksaksi']=$cekNotifId;
         $data['js']='topup.js'; 
         
         return view('user/topup',$data);
@@ -502,6 +529,9 @@ class User extends BaseController
         
         $data['title']='Mau Cafe | tambahProfile';
         $data['css']='editprofil.css';
+        @$data['cekNotifTranksaksi']=$this->TranksaksiModel->cekTranksaksiByIdStatus2(@$data['profilByIdLogin']['id'],'diproses','dikonfirmasi');
+        $cekNotifId=@$data['cekNotifTranksaksi']['id_tranksaksi'];
+        $data['id_tranksaksi']=$cekNotifId;
         $data['js']='tambahprofil.js'; 
         return view('user/tambahprofile',$data);
         
@@ -613,6 +643,9 @@ class User extends BaseController
 
         $data['title']='Mau Cafe | Pin';
         $data['css']='pin.css';
+        @$data['cekNotifTranksaksi']=$this->TranksaksiModel->cekTranksaksiByIdStatus2(@$data['profilByIdLogin']['id'],'diproses','dikonfirmasi');
+        $cekNotifId=@$data['cekNotifTranksaksi']['id_tranksaksi'];
+        $data['id_tranksaksi']=$cekNotifId;
         $data['js']='pin.js';
          
         return view('user/pinProfile',$data);
@@ -716,6 +749,9 @@ class User extends BaseController
          }
         $data['title']='Mau Cafe | Verifikasi Pin';
         $data['css']='pin.css';
+        @$data['cekNotifTranksaksi']=$this->TranksaksiModel->cekTranksaksiByIdStatus2(@$data['profilByIdLogin']['id'],'diproses','dikonfirmasi');
+        $cekNotifId=@$data['cekNotifTranksaksi']['id_tranksaksi'];
+        $data['id_tranksaksi']=$cekNotifId;
         $data['js']='verifikasiPin.js'; 
         
         return view('user/verifikasiPin',$data);
@@ -743,6 +779,9 @@ class User extends BaseController
          }
         $data['title']='Mau Cafe | Verifikasi Pin Tranksaki';
         $data['css']='pin.css';
+        @$data['cekNotifTranksaksi']=$this->TranksaksiModel->cekTranksaksiByIdStatus2(@$data['profilByIdLogin']['id'],'diproses','dikonfirmasi');
+        $cekNotifId=@$data['cekNotifTranksaksi']['id_tranksaksi'];
+        $data['id_tranksaksi']=$cekNotifId;
         $data['js']='verifikasiPinTranksaksi.js';
         $data['total_pembayaran']=$total_pembayaran;
         $data['lokasi']=trim($lokasi);
@@ -773,6 +812,9 @@ class User extends BaseController
          }
         $data['title']='Mau Cafe | Verifikasi Pin Saldo';
         $data['css']='pin.css';
+        @$data['cekNotifTranksaksi']=$this->TranksaksiModel->cekTranksaksiByIdStatus2(@$data['profilByIdLogin']['id'],'diproses','dikonfirmasi');
+        $cekNotifId=@$data['cekNotifTranksaksi']['id_tranksaksi'];
+        $data['id_tranksaksi']=$cekNotifId;
         $data['js']='verifikasiPinSaldo.js';
         $data['nomor']=$nomor;
         $data['saldo']=$saldo;    
@@ -877,6 +919,7 @@ class User extends BaseController
                         $this->TranksaksiModel->save($dataTranksaksi);
                         
                         $dataTranksaksiTerbaru=$this->TranksaksiModel->getTranksaksiTerbaruByIdpembeli(@$profileLogin['id']);
+                        
                         $dataRoomChat=[
                             'id_pembeli'=>(int)@$profileLogin['id'],
                             'id_tranksaksi'=>(int)$dataTranksaksiTerbaru['id_tranksaksi']
@@ -884,7 +927,8 @@ class User extends BaseController
                         $this->RoomChatModel->save($dataRoomChat);
                         $msg=[
                             'success'=>'Silahkan Tunggu',
-                            'id_tranksaksi'=>$dataTranksaksiTerbaru['id_tranksaksi']
+                            'id_tranksaksi'=>$dataTranksaksiTerbaru['id_tranksaksi'],
+                            'names'=>$dataTranksaksiTerbaru['nama_pembeli']
                         ];
                     }else{
                         $msg=[
@@ -917,7 +961,8 @@ class User extends BaseController
                     $this->RoomChatModel->save($dataRoomChat);
                     $msg=[
                         'success'=>'Silahkan Tunggu',
-                        'id_tranksaksi'=>$dataTranksaksiTerbaru['id_tranksaksi']
+                        'id_tranksaksi'=>$dataTranksaksiTerbaru['id_tranksaksi'],
+                        'names'=>$dataTranksaksiTerbaru['nama_pembeli']
                     ];
                 }
              }else{
@@ -1075,6 +1120,9 @@ class User extends BaseController
         
         $data['title']='Mau Cafe | editProfile';
         $data['css']='editprofil.css';
+        @$data['cekNotifTranksaksi']=$this->TranksaksiModel->cekTranksaksiByIdStatus2(@$data['profilByIdLogin']['id'],'diproses','dikonfirmasi');
+        $cekNotifId=@$data['cekNotifTranksaksi']['id_tranksaksi'];
+        $data['id_tranksaksi']=$cekNotifId;
         $data['js']='editProfile.js'; 
         
         return view('user/editProfile',$data);
@@ -1382,6 +1430,9 @@ class User extends BaseController
         
         $data['title']='Mau Cafe | Ubah Sandi';
         $data['css']='editprofil.css';
+        @$data['cekNotifTranksaksi']=$this->TranksaksiModel->cekTranksaksiByIdStatus2(@$data['profilByIdLogin']['id'],'diproses','dikonfirmasi');
+        $cekNotifId=@$data['cekNotifTranksaksi']['id_tranksaksi'];
+        $data['id_tranksaksi']=$cekNotifId;
         $data['js']='ubahSandi.js'; 
         
         return view('user/ubahPassword',$data);
@@ -1485,6 +1536,9 @@ class User extends BaseController
         
         $data['title']='Mau Cafe | Keamanan';
         $data['css']='profile.css';
+        @$data['cekNotifTranksaksi']=$this->TranksaksiModel->cekTranksaksiByIdStatus2(@$data['profilByIdLogin']['id'],'diproses','dikonfirmasi');
+        $cekNotifId=@$data['cekNotifTranksaksi']['id_tranksaksi'];
+        $data['id_tranksaksi']=$cekNotifId;
         $data['js']='profil.js'; 
         
         return view('user/keamanan',$data);
@@ -1514,6 +1568,9 @@ class User extends BaseController
 
         $data['title']='Mau Cafe | Ubah Pin';
         $data['css']='pin.css';
+        @$data['cekNotifTranksaksi']=$this->TranksaksiModel->cekTranksaksiByIdStatus2(@$data['profilByIdLogin']['id'],'diproses','dikonfirmasi');
+        $cekNotifId=@$data['cekNotifTranksaksi']['id_tranksaksi'];
+        $data['id_tranksaksi']=$cekNotifId;
         $data['js']='pin.js'; 
         return view('user/ubahPin',$data);
         }
@@ -1543,6 +1600,9 @@ class User extends BaseController
 
         $data['title']='Mau Cafe | Ubah Email';
         $data['css']='editProfil.css';
+        @$data['cekNotifTranksaksi']=$this->TranksaksiModel->cekTranksaksiByIdStatus2(@$data['profilByIdLogin']['id'],'diproses','dikonfirmasi');
+        $cekNotifId=@$data['cekNotifTranksaksi']['id_tranksaksi'];
+        $data['id_tranksaksi']=$cekNotifId;
         $data['js']='newEmail.js'; 
         return view('user/newEmail',$data);
         }
@@ -1627,6 +1687,9 @@ class User extends BaseController
       
             $data['title']='Mau Cafe | Ubah Email';
             $data['css']='editprofil.css';
+            @$data['cekNotifTranksaksi']=$this->TranksaksiModel->cekTranksaksiByIdStatus2(@$data['profilByIdLogin']['id'],'diproses','dikonfirmasi');
+        $cekNotifId=@$data['cekNotifTranksaksi']['id_tranksaksi'];
+        $data['id_tranksaksi']=$cekNotifId;
             $data['js']='ubahEmail.js'; 
             
             return view('user/sendUbahEmail',$data);
@@ -1722,6 +1785,9 @@ class User extends BaseController
         
         $data['title']='Mau Cafe | Ubah Pin';
         $data['css']='editprofil.css';
+        @$data['cekNotifTranksaksi']=$this->TranksaksiModel->cekTranksaksiByIdStatus2(@$data['profilByIdLogin']['id'],'diproses','dikonfirmasi');
+        $cekNotifId=@$data['cekNotifTranksaksi']['id_tranksaksi'];
+        $data['id_tranksaksi']=$cekNotifId;
         $data['js']='ubahPinEmail.js'; 
         
         return view('user/sendEmailPin',$data);
@@ -1919,6 +1985,9 @@ class User extends BaseController
          }
         $data['title']='Mau Cafe | Kirim Saldo';
         $data['css']='kirimsaldo.css';
+        @$data['cekNotifTranksaksi']=$this->TranksaksiModel->cekTranksaksiByIdStatus2(@$data['profilByIdLogin']['id'],'diproses','dikonfirmasi');
+        $cekNotifId=@$data['cekNotifTranksaksi']['id_tranksaksi'];
+        $data['id_tranksaksi']=$cekNotifId;
         $data['js']='kirimsaldo.js'; 
                 
         return view('user/kirimSaldo',$data);
